@@ -1,0 +1,10 @@
+Classname: Account
+Parent class (if any): None
+Classname Subclasses (if any): None
+Responsibilities: 
+	Allow users to log into our service
+	Allow users to sign up for our service
+	Allow users to change information about themselves
+	Distinguish between a student and teach account
+Collaborators: 
+	DatabaseHandler

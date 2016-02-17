@@ -1,0 +1,9 @@
+Classname: SearchEngine 
+Parent class (if any): None
+Classname Subclasses (if any): None
+Responsibilities: 
+	Connect parsed input from the UserInputParser to the DataBaseHandler to perform searches
+Collaborators: 
+	UserInputParser
+	Parser
+	DatabaseHandler

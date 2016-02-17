@@ -1,0 +1,6 @@
+Classname: PDFParser 
+Parent class (if any): Parser
+Classname Subclasses (if any): None
+Responsibilities: 
+	Parses .PDF document for keywords
+Collaborators: 

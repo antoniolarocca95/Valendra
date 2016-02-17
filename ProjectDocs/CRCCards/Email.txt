@@ -1,0 +1,8 @@
+Classname: Email 
+Parent class (if any): None
+Classname Subclasses (if any): None
+Responsibilities: 
+	Generate an email
+	Email the proper students to inform them of a new study buddy request
+Collaborators: 
+	DatabaseQuerying

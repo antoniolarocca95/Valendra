@@ -1,0 +1,9 @@
+Classname: UserInputParser 
+Parent class (if any): None
+Classname Subclasses (if any): None
+Responsibilities: 
+	Grammar Correction
+	Auto-complete
+	SQL Injection Security
+Collaborators:
+	SearchEngine

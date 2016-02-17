@@ -1,0 +1,9 @@
+Classname: DatabaseQuerying
+Parent class (if any): DatabaseHandler
+Classname Subclasses (if any): None
+Responsibilities: 
+	Perform searches on a database
+	Filter a database
+Collaborators: 
+	Account Database
+	Document Database
