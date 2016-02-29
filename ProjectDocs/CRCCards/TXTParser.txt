@@ -1,0 +1,6 @@
+Classname: TXTParser 
+Parent class (if any): Parser
+Classname Subclasses (if any): None
+Responsibilities: 
+	Parses .TXT document for keywords
+Collaborators: 

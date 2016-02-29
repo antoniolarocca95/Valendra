@@ -1,0 +1,6 @@
+Classname: HTMLParser 
+Parent class (if any): Parser
+Classname Subclasses (if any): None
+Responsibilities: 
+	Parses .HTML document for keywords
+Collaborators: 

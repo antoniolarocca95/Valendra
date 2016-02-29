@@ -1,0 +1,7 @@
+Classname: Document
+Parent class (if any): None
+Classname Subclasses (if any): None
+Responsibilities: 
+	Holds information about uploader, who favourited the document, comments, tags.
+Collaborators: 
+	DatabaseHandler

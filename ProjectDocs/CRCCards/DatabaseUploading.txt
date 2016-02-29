@@ -1,0 +1,8 @@
+Classname: DatabaseUploading
+Parent class (if any): DatabaseHandler
+Classname Subclasses (if any): None
+Responsibilities: 
+	Add to a database
+Collaborators: 
+	Account Database
+	Document Database
