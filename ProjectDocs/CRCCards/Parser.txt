@@ -1,0 +1,6 @@
+Classname: Parser 
+Parent class (if any): None
+Classname Subclasses (if any): HTMLParser, PDFParser, TXTParser
+Responsibilities: 
+	Parse documents uploaded by instructors or students
+Collaborators: 

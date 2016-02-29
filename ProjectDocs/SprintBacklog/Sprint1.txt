@@ -1,0 +1,20 @@
+Sprint Backlog #1
+Feb 18th, 2016 - Mar 1st, 2016
+
+Things that need to be done:
+a) Create skeleton code for accounts and documents and start implementing
+b) Create skeleton code for parsing and start implementing
+c) Create skeleton code for databases and start implementing
+d) email, searchengine, userinput skeleton code and start implementing
+
+Kelvin
+b)
+
+Paolo
+d)
+
+Antonio
+a)
+
+Ertan
+c)

@@ -1,0 +1,8 @@
+Classname: DatabaseHandler
+Parent class (if any): None
+Classname Subclasses (if any): DatabaseQuerying, DataUploading
+Responsibilities: 
+	Query a database
+Collaborators: 
+	Account Database
+	Document Database
