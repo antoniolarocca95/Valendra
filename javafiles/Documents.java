@@ -1,9 +1,18 @@
 package project;
 
 public class Documents {
+  
+  /*
+   * Static variables to keep track of document types
+   */
+  
   static final int TYPE_HTML = 0;
   static final int TYPE_TXT = 1;
   static final int TYPE_PDF = 2;
+  
+  /**
+   * All variables needed for our documents
+   */
   
   int docType;
   int rating;
@@ -14,7 +23,11 @@ public class Documents {
   public Documents() {
     
   }
-
+  
+  /*
+   * Start of Getters and Setters, more functions to be added
+   */
+  
   public int getDocType() {
     return docType;
   }
