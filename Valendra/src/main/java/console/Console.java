@@ -15,4 +15,8 @@ public class Console {
 	private void search(String query){
 		
 	}
+	
+	private void upload(String doclocation){
+		
+	}
 }
