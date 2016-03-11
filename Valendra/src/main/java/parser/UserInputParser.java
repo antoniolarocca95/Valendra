@@ -1,6 +1,4 @@
-package valendra;
-
-
+package parser;
 
 /*Parser class for Valendra.
  *
@@ -29,7 +27,7 @@ public class UserInputParser{
 	/*Set input
 	 *s
 	 */
-	public void setInput(input){
+	public void setInput(String input){
 		this.input = input;
 	}
 

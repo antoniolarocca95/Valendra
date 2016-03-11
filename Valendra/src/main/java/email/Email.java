@@ -1,6 +1,4 @@
-package valendra;
-
-
+package email;
 
 /*This is the email class for Valendra.
  *
@@ -50,7 +48,7 @@ public class Email{
 	}
 
 	public String getBcc(){
-		return this.bcc
+		return this.bcc;
 	}
 
 	
@@ -58,8 +56,8 @@ public class Email{
 	 *
 	 *@return true->success ; false->unsuccessful
 	 */
-	public bool send(){
-		return null;
+	public boolean send(){
+		return false;
 	}
 
 

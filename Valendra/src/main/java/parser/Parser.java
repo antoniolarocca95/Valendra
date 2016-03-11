@@ -1,16 +1,18 @@
+package parser;
+
 public class Parser{
 	private String name;
-	private Int docNumber;
+	private int docNumber;
 
-	public Parser{
+	public Parser(){
 
 	}
 	//Gets Parsed Document
-	public getParsedDoc{
+	public void getParsedDoc(){
 
 	}
 	//Sets Parsed Document
-	public setParsedDoc{
+	public void setParsedDoc(){
 
 	}
 }

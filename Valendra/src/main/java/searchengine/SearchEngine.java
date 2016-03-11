@@ -1,6 +1,4 @@
-package valendra;
-
-
+package searchengine;
 
 /*Search Engine for Valendra
  *
@@ -14,7 +12,7 @@ public class SearchEngine{
 
 	private String[][] parsedInput;
 
-	public SearchEngine(String parsedInput){
+	public SearchEngine(String[][] parsedInput){
 		this.parsedInput = parsedInput;
 	}
 
@@ -22,7 +20,7 @@ public class SearchEngine{
 	 *
 	 *@returns parsedInput
 	 */
-	public String getParsedInput(){
+	public String[][] getParsedInput(){
 		return this.parsedInput;
 	}
 

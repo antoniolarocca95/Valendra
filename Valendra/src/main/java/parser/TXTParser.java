@@ -1,16 +1,18 @@
+package parser;
+
 public class TXTParser extends Parser{
 	private String name;
-	private Int docNumber;
+	private int docNumber;
 
-	public TXTParser{
+	public TXTParser(){
 
 	}
 	//Gets Parsed Document
-	public getParsedDoc{
+	public void getParsedDoc(){
 
 	}
 	//Sets Parsed Document
-	public setParsedDoc{
+	public void setParsedDoc(){
 
 	}
 }

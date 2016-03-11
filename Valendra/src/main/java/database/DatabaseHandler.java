@@ -1,3 +1,7 @@
+package database;
+
+import java.sql.ResultSet;
+
 public class DatabaseHandler
 {
 
@@ -7,6 +11,7 @@ public class DatabaseHandler
 	*/
 	public static ResultSet query(String query)
 	{
+		return null;
 
 	}
 

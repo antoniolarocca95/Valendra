@@ -1,4 +1,4 @@
-package project;
+package document;
 
 public class Documents {
   
