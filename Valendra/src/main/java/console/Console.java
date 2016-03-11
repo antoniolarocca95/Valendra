@@ -11,4 +11,8 @@ public class Console {
 	private boolean login(String username, String password){
 		return false;
 	}
+	
+	private void search(String query){
+		
+	}
 }
