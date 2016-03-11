@@ -50,9 +50,22 @@ public class Console {
 	private static void searcher() {
 		Scanner sc = new Scanner(System.in);
 		String input = "";
-		while (!input.equals("logout")){
-			
+		while (!input.equals("logout")) {
+			while (!input.equals("upload") && !input.equals("search") && !input.equals("logout")) {
+				System.out.println("Do you wish to [search], [upload] or [logout]?");
+				input = sc.nextLine();
+			}
+			if (input.equals("upload")) {
+				System.out.println("Where is the location of the document to upload?");
+				input = sc.nextLine();
+				upload(input);
+			} else if (input.equals("search")) {
+				System.out.println("What would you like to find?");
+				input = sc.nextLine();
+				search(input);
+			}
 		}
+		sc.close();
 	}
 
 	private static void register(String fname, String lname, String username, String password, String email) {
@@ -63,11 +76,11 @@ public class Console {
 		return false;
 	}
 
-	private void search(String query) {
+	private static void search(String query) {
 
 	}
 
-	private void upload(String doclocation) {
+	private static void upload(String doclocation) {
 
 	}
 }
