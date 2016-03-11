@@ -1,22 +1,73 @@
 package console;
 
+import java.util.Scanner;
+
 public class Console {
-	public static void main(String[] args){
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		String input = "";
+		String username = "", password = "";
+		while (!input.equals("exit")) {
+			while (!input.equals("login") && !input.equals("register") && !input.equals("exit")) {
+				System.out.println("Do you wish to [login], [register] or [exit]");
+				input = sc.nextLine();
+			}
+			if (input.equals("login")) {
+				System.out.println("Type in your username");
+				username = sc.nextLine();
+				System.out.println("Type in your password");
+				password = sc.nextLine();
+				if (login(username, password)) {
+					searcher();
+				} else {
+					System.out.println("Invalid user");
+				}
+			} else if (input.equals("register")) {
+				System.out.println("Type in your first name");
+				String fname = sc.nextLine();
+				System.out.println("Type in your last name");
+				String lname = sc.nextLine();
+				System.out.println("Type in your email");
+				String email = sc.nextLine();
+				System.out.println("Type in your username");
+				username = sc.nextLine();
+				System.out.println("Type in your password");
+				password = sc.nextLine();
+				System.out.println("Confirm your password");
+				String conpassword = sc.nextLine();
+				if (password.equals(conpassword)) {
+					register(fname, lname, username, password, email);
+					searcher();
+				} else {
+					System.out.println("Passwords did not match");
+				}
+			}
+		}
+		sc.close();
+		System.exit(0);
 	}
-	
-	private void register(String fname, String lname, String username, String password, String email){	
-		
+
+	private static void searcher() {
+		Scanner sc = new Scanner(System.in);
+		String input = "";
+		while (!input.equals("logout")){
+			
+		}
 	}
-	
-	private boolean login(String username, String password){
+
+	private static void register(String fname, String lname, String username, String password, String email) {
+
+	}
+
+	private static boolean login(String username, String password) {
 		return false;
 	}
-	
-	private void search(String query){
-		
+
+	private void search(String query) {
+
 	}
-	
-	private void upload(String doclocation){
-		
+
+	private void upload(String doclocation) {
+
 	}
 }
