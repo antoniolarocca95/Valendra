@@ -9,8 +9,8 @@ public class DatabaseUploading{
 	public static Connection connectToDatabase(){
 		Connection c = null;
 		try{
-			Class.forname("org.sqlite.JBDC");
-			c = DriverConnection.getConnection("jbdc:sqlite:test.db");
+			Class.forName("org.sqlite.JBDC");
+			c = DriverManager.getConnection("jbdc:sqlite:test.db");
 			System.out.println("Database connected successful");
 		}catch(Exception e){
 			System.out.println("Database opening unsuccessful");
@@ -18,7 +18,7 @@ public class DatabaseUploading{
 		return c;
 	}
 
-	/*Creates an Account table and dummy entries for testing*/s
+	/*Creates an Account table and dummy entries for testing*/
 	private static void createAccountTable(){
 		Connection c = connectToDatabase();
 		try{
@@ -63,7 +63,7 @@ public class DatabaseUploading{
 					lastname + "," +
 					email + "," +
 					username + "," +
-					pass + ")"
+					pass + ")";
 			stment.executeUpdate(sql);
 			stment.close();
 			c.close();

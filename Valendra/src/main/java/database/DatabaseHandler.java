@@ -9,15 +9,15 @@ public class DatabaseHandler
 	* query our database based on a string
 	* will return a resultset object that we can use to extract the info from our query
 	*/
-	public static ResultSet query(String query)
+	public static ResultSet query(String query) throws SQLException
 	{
 		Connection c = DatabaseUploading.connectToDatabase();
 		Statement stment = c.createStatement();
-		ResultSet res = stment.execute()
+		ResultSet res = stment.executeQuery(query);
 		return res;
 	}
 
-	public static boolean loginUser(String username, String password){
+	public static boolean loginUser(String username, String password) throws SQLException {
 		String sql = "SELECT * FROM tab_acc acc WHERE acc.username = " + username +
 				"AND acc.password = " + password;
 		ResultSet result = query(sql);
