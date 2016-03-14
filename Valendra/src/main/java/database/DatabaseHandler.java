@@ -1,6 +1,6 @@
 package database;
 
-import java.sql.ResultSet;
+import java.sql.*;
 
 public class DatabaseHandler
 {
@@ -11,8 +11,22 @@ public class DatabaseHandler
 	*/
 	public static ResultSet query(String query)
 	{
-		return null;
+		Connection c = DatabaseUploading.connectToDatabase();
+		Statement stment = c.createStatement();
+		ResultSet res = stment.execute()
+		return res;
+	}
 
+	public static boolean loginUser(String username, String password){
+		String sql = "SELECT * FROM tab_acc acc WHERE acc.username = " + username +
+				"AND acc.password = " + password;
+		ResultSet result = query(sql);
+		if (result == null){
+			return false;
+		}
+		else{
+			return true;
+		}
 	}
 
 	/*

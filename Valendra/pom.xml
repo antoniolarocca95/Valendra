@@ -4,4 +4,13 @@
   <artifactId>Valendra</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>Valendra</name>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.xerial</groupId>
+			<artifactId>sqlite-jdbc</artifactId>
+			<version>3.8.11.2</version>
+		</dependency>
+	</dependencies>
+
 </project>
