@@ -26,6 +26,9 @@ public class DatabaseHandler {
 			c.setAutoCommit(false);
 			Statement stment = c.createStatement();
 			res = stment.executeQuery(query);
+			stment.close();
+			c.commit();
+			c.close();
 		} catch (Exception e) {
 
 		}

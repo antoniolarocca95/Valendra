@@ -44,7 +44,7 @@ public class Console {
 				} else {
 					System.out.println("Passwords did not match");
 				}
-			}
+			} 
 		}
 		sc.close();
 		System.exit(0);
@@ -84,6 +84,6 @@ public class Console {
 	}
 
 	private static void upload(String doclocation) {
-
+		DatabaseUploading.addDocument(doclocation);
 	}
 }

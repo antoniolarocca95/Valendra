@@ -1,6 +1,9 @@
 package database;
 
 import java.sql.*;
+import java.io.FileReader;
+import java.io.BufferedReader;
+import java.io.File;
 
 
 public class DatabaseUploading{
@@ -13,18 +16,37 @@ public class DatabaseUploading{
 			c = DriverManager.getConnection("jdbc:sqlite:Database.db");
 			System.out.println("Database connected successful");
 		}catch(Exception e){
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 		}
 		return c;
 	}
 
-	public static void addDocument(){
+	public static void addDocument(String pathname){
+		Connection c = connectToDatabase();
 		try{
+			String readtext = null;
+			String data = null;
+			File doc = new File(pathname);
+			FileReader read = new FileReader(doc);
+			BufferedReader strm = new BufferedReader(read);
 			
+			while ((readtext = strm.readLine()) != null){
+				data = data + readtext;
+			}
+			
+			
+			Statement stment = c.createStatement();
+			String sql = "INSERT INTO tab_doc values(\"" +
+					pathname + "\",\"" + data + "\");";
+					
+			stment.executeUpdate(sql);
+			stment.close();
+			c.commit();
+			c.close();
 
 
 		}catch(Exception e){
-
+			System.out.println(e.getMessage());
 
 		}
 	}
