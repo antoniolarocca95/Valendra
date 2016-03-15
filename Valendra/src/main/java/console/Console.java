@@ -2,6 +2,8 @@ package console;
 
 import java.util.Scanner;
 
+import database.DatabaseUploading;
+
 public class Console {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
@@ -69,7 +71,7 @@ public class Console {
 	}
 
 	private static void register(String fname, String lname, String username, String password, String email) {
-
+		DatabaseUploading.addUser(fname, lname, email, username, password);
 	}
 
 	private static boolean login(String username, String password) {
