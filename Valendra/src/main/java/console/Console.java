@@ -22,6 +22,8 @@ public class Console {
 				password = sc.nextLine();
 				if (login(username, password)) {
 					searcher();
+					sc.close();
+					System.exit(0);
 				} else {
 					System.out.println("Invalid user");
 				}
@@ -41,6 +43,8 @@ public class Console {
 				if (password.equals(conpassword)) {
 					register(fname, lname, username, password, email);
 					searcher();
+					sc.close();
+					System.exit(0);
 				} else {
 					System.out.println("Passwords did not match");
 				}
@@ -53,9 +57,9 @@ public class Console {
 	private static void searcher() {
 		Scanner sc = new Scanner(System.in);
 		String input = "";
-		while (!input.equals("logout")) {
-			while (!input.equals("upload") && !input.equals("search") && !input.equals("logout")) {
-				System.out.println("Do you wish to [search], [upload] or [logout]?");
+		while (!input.equals("exit")) {
+			while (!input.equals("upload") && !input.equals("search") && !input.equals("exit")) {
+				System.out.println("Do you wish to [search], [upload] or [exit]?");
 				input = sc.nextLine();
 			}
 			if (input.equals("upload")) {
