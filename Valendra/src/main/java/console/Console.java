@@ -2,6 +2,7 @@ package console;
 
 import java.util.Scanner;
 
+import database.DatabaseHandler;
 import database.DatabaseUploading;
 
 public class Console {
@@ -75,7 +76,7 @@ public class Console {
 	}
 
 	private static boolean login(String username, String password) {
-		return false;
+		return DatabaseHandler.loginUser(username, password);
 	}
 
 	private static void search(String query) {
