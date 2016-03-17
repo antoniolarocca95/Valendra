@@ -4,6 +4,7 @@ import java.sql.*;
 import java.io.FileReader;
 import java.io.BufferedReader;
 import java.io.File;
+import java.nio.file.StandardCopyOption.*;
 
 
 public class DatabaseUploading{
@@ -22,6 +23,9 @@ public class DatabaseUploading{
 	}
 
 	public static void addDocument(String pathname){
+		String source = pathname;
+		String target = "filesDirectory";
+		Files.copy(source, target);
 		Connection c = connectToDatabase();
 		try{
 			String readtext = null;
