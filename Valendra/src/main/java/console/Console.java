@@ -86,7 +86,7 @@ public class Console {
 
 	private static void search(String query) {
 		try {
-			SearchEngine.queryDatabase(query);
+			SearchEngine.search(query);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
