@@ -50,52 +50,6 @@ public class SearchEngine {
 	 *
 	 * @returns a string of documents that relate to user input.
 	 */
-	public static void createIndex() throws IOException {
-		INDEX_DIRECTORY = "indexDirectory";
-		FILES_DIRECTORY = "filesDirectory";
-		StandardAnalyzer analyzer = new StandardAnalyzer();
-		IndexWriterConfig config = new IndexWriterConfig(analyzer);
-		IndexWriter w = new IndexWriter(INDEX_DIRECTORY, config);
-		File dir = new File(FILES_DIRECTORY);
-		File[] files = dir.listFiles();
-
-		for (File file : files) {
-			Document document = new Document();
-			
-			String path = file.getCanonicalPath();
-			document.add(new Field("path", path, Field.Store.YES, Field.Index.UN_TOKENIZED));
-			
-			Reader reader = new FileReader(file);
-			document.add(new Field("contents", contents));
-		
-			indexWriter.addDocument(document);
-		}
-		indexWriter.optimize();
-		indexWriter.close();
-	}
-
-	public static void search(String searchString) throws IOException, ParseException {
-		Directory directory = FSDirectory.getDirectory(INDEX_DIRECTORY);
-		IndexReader indexReader = IndexReader.open(directory);
-		IndexSearcher indexSearcher = new IndexSearcher(indexReader);
-		
-		StandardAnalyzer analyzer = new StandardAnalyzer();
-		QueryParser queryParser = new QueryParser("contents", analyzer);
-		Query query = queryParser.parse(searchString);
-		Hits hits = indexSearcher.search(query);
-		
-		Iterator<Hit> it = hits.iterator();
-		displayResults(it);
-	}
-
-	public static void displayResults(Iterator<Hit> it) {
-		while (it.hasNext()) {
-			Hit hit = it.next();
-			Document document = hit.getDocument();
-			String path = document.get("path");
-			System.out.println("Hit: " + path);
-		}
-	}
 
 	public static void queryDatabase(String query) throws IOException, ParseException {
 		StandardAnalyzer analyzer = new StandardAnalyzer();
@@ -124,8 +78,7 @@ public class SearchEngine {
 		IndexReader reader = DirectoryReader.open(index);
 		IndexSearcher searcher = new IndexSearcher(reader);
 		TopDocs docs1 = searcher.search(q1, hitsPerPage);
-		TopDocs docs2 = searcher.search(q2, hitsPerPage);
-		ScoreDoc[] hits = (docs1.scoreDocs + docs2.scoreDocs);
+		ScoreDoc[] hits = (docs1.scoreDocs);
 
 		// 4. display results
 		System.out.println("Found " + hits.length + " hits.");
