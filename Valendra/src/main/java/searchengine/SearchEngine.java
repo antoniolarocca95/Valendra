@@ -10,6 +10,7 @@ package searchengine;
  */
 public class SearchEngine{
 
+	public static final String FILES_DIRECTORY = "filesDirectory";
 	private String[][] parsedInput;
 
 	public SearchEngine(String[][] parsedInput){

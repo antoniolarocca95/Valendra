@@ -1,12 +1,13 @@
 package console;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 import database.DatabaseHandler;
 import database.DatabaseUploading;
 
 public class Console {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		Scanner sc = new Scanner(System.in);
 		String input = "";
 		String username = "", password = "";
@@ -44,13 +45,13 @@ public class Console {
 				} else {
 					System.out.println("Passwords did not match");
 				}
-			} 
+			}
 		}
 		sc.close();
 		System.exit(0);
 	}
 
-	private static void searcher() {
+	private static void searcher() throws IOException {
 		Scanner sc = new Scanner(System.in);
 		String input = "";
 		while (!input.equals("logout")) {
@@ -83,7 +84,7 @@ public class Console {
 
 	}
 
-	private static void upload(String doclocation) {
+	private static void upload(String doclocation) throws IOException {
 		DatabaseUploading.addDocument(doclocation);
 	}
 }
