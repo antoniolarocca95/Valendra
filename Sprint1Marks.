@@ -1,0 +1,11 @@
+1. You guys are not using separate branches for your work. All work is going on the master branch. 
+
+2. No pull requests are being issued by any of the team member. 
+
+3. Not possible to generate the burn down chart in your sprint, because you have no initial estimates OR actual work being tracked correctly. 
+
+4. No commits except for couple maybe, that are mapped to JIRA. Rest of the commits in bitbucket are orphaned. 
+
+5. Three snapshots of your Task Board: in the beginning of the first Sprint, in the middle, and at the end of the first Sprint. These must be committed into BitBucket under directory sprint1Docs.
+
+2.5/5
