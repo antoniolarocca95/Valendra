@@ -41,25 +41,25 @@ public class SearchEngine {
 		IndexWriter w = new IndexWriter(index, config);
 		File dir = new File(FILES_DIRECTORY);
 		File[] files = dir.listFiles();
-
 		for (File file : files) {
 			Document document = new Document();
 
-			String path = file.getCanonicalPath();
-			document.add(new TextField("path", path, Field.Store.YES));
+			String name = file.getName();
+			
+			document.add(new TextField("name", name, Field.Store.YES));
 
 			Reader reader = new FileReader(file);
 			document.add(new TextField("contents", reader));
 
 			w.addDocument(document);
 		}
-		psearch(searchString, index);
+		psearch(searchString, w);
 		w.close();
 	}
 
-	private static void psearch(String searchString, Directory index) throws IOException, ParseException {
+	private static void psearch(String searchString, IndexWriter index) throws IOException, ParseException {
 		StandardAnalyzer analyzer = new StandardAnalyzer();
-		Query q1 = new QueryParser("title", analyzer).parse(searchString);
+		Query q1 = new QueryParser("name", analyzer).parse(searchString);
 		Query q2 = new QueryParser("contents", analyzer).parse(searchString);
 
 		int hitsPerPage = 10;
@@ -69,7 +69,6 @@ public class SearchEngine {
 		TopDocs docs2 = searcher.search(q2, hitsPerPage);
 		ScoreDoc[] hits = Arrays.copyOf(docs1.scoreDocs, docs1.scoreDocs.length + docs2.scoreDocs.length);
 		System.arraycopy(docs2.scoreDocs, 0, hits, docs1.scoreDocs.length, docs2.scoreDocs.length);
-		ScoreDoc[] hits = (docs1.scoreDocs);
 
 		displayResults(hits, searcher);
 	}
@@ -80,7 +79,7 @@ public class SearchEngine {
 		for (int i = 0; i < hits.length; ++i) {
 			int docId = hits[i].doc;
 			Document d = searcher.doc(docId);
-			System.out.println((i + 1) + ". " + "\t" + d.get("title"));
+			System.out.println((i + 1) + ". " + "\t" + d.get("name"));
 		}
 	}
 }

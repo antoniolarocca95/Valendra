@@ -27,7 +27,9 @@ public class DatabaseUploading {
 
 	public static void addDocument(String pathname) throws IOException {
 		File source = new File(pathname);
-		File dest = new File(SearchEngine.FILES_DIRECTORY);
+		String filename = source.getName();
+		File dest = new File(SearchEngine.FILES_DIRECTORY + "/" + filename);
+		dest.createNewFile();
 		FileUtils.copyFile(source, dest);
 		Connection c = connectToDatabase();
 		try {
