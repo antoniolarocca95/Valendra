@@ -32,29 +32,8 @@ import org.apache.lucene.store.RAMDirectory;
  *This will output a list of documents to be displaeyed on the front end.
  */
 public class SearchEngine {
-	static final String FILES_DIRECTORY = "filesDirectory";
-
 	public static final String FILES_DIRECTORY = "filesDirectory";
-	private String[][] parsedInput;
 
-	public SearchEngine(String[][] parsedInput) {
-		this.parsedInput = parsedInput;
-	}
-
-	/*
-	 * Gets parsedInput
-	 *
-	 * @returns parsedInput
-	 */
-	public String[][] getParsedInput() {
-		return this.parsedInput;
-	}
-
-	/*
-	 * Queries the database using the parsed user input.
-	 *
-	 * @returns a string of documents that relate to user input.
-	 */
 	public static void search(String searchString) throws IOException, ParseException {
 		StandardAnalyzer analyzer = new StandardAnalyzer();
 		Directory index = new RAMDirectory();
@@ -90,6 +69,7 @@ public class SearchEngine {
 		TopDocs docs2 = searcher.search(q2, hitsPerPage);
 		ScoreDoc[] hits = Arrays.copyOf(docs1.scoreDocs, docs1.scoreDocs.length + docs2.scoreDocs.length);
 		System.arraycopy(docs2.scoreDocs, 0, hits, docs1.scoreDocs.length, docs2.scoreDocs.length);
+		ScoreDoc[] hits = (docs1.scoreDocs);
 
 		displayResults(hits, searcher);
 	}
