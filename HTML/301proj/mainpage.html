@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<link rel="stylesheet" type="text/css" href="mainpage.css">
+	</head>
+	
+	<script>
+		function results(){
+			document.getElementById("resultsDiv").innerHTML="";
+			var xhttp;
+			xhttp = new XMLHttpRequest();
+			
+			xhttp.onreadystatechange = function()
+			{
+				if(xhttp.readyState == 4 && xhttp.status == 200){
+					for(var x = 0; x < xhttp.responseText.length; x++){
+						var new_cloud = xhttp.responseText.split(",");
+					}
+					for(var y = 0; y < new_cloud.length; y++){
+						var split_new_cloud = new_cloud[y];
+						document.getElementById('resultsDiv').innerHTML += "<a href='documents/" + split_new_cloud[0] + "'>" + split_new_cloud[0] + "</a><br>";
+					}
+				}
+			}
+			xhttp.open('GET', 'results.php?q=' + document.getElementById("bar").value, true);
+			xhttp.send();
+		}
+	</script>
+
+	<body>
+		<h1>Welcome!</h1>
+			<form action="logout.php" method="get">
+				<input type = "submit" value="Logout" id = "Logout">
+			</form>
+
+			<input type = "text" id = "bar" name="search" placeholder="Search">
+			<button onclick = "results()">Enter</button>
+			<br>
+
+		<form enctype="multipart/form-data" action="upload.php" id="uploadForm" method="post">
+			<input type="file" id="filename" name="img">
+			<input type="submit" value="Upload"></button>
+		</form>
+
+		<div id="resultsDiv">Results here</div>
+		
+		<form id = "radio">
+		  <input type="radio" name="sort" value="Most Relevant" checked>Most Relevant<br>
+		  <input type="radio" name="sort" value="By Favourite" >By Favourite<br>
+		  <input type="radio" name="sort" value="Most Recent">Most Recent<br>
+		  <input type="radio" name="sort" value="Number of Likes">Likes<br>
+		  <input type="radio" name="sort" value="Most Commented">Most Commented
+		</form>
+		
+	</body>
+</html>
+
