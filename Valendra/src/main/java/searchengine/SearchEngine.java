@@ -6,6 +6,11 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.Arrays;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
@@ -31,10 +36,19 @@ import org.apache.lucene.store.RAMDirectory;
  *
  *This will output a list of documents to be displaeyed on the front end.
  */
-public class SearchEngine {
-	public static final String FILES_DIRECTORY = "filesDirectory";
+public class SearchEngine extends HttpServlet {
+	private String FILES_DIRECTORY;
 
-	public static void search(String searchString) throws IOException, ParseException {
+	public void init() {
+		// Get the file location where it would be stored.
+		FILES_DIRECTORY = getServletContext().getInitParameter("file-upload");
+	}
+
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		response.setContentType("text/html");
+		java.io.PrintWriter out = response.getWriter();
+		String searchString = request.getParameter("search");
+
 		StandardAnalyzer analyzer = new StandardAnalyzer();
 		Directory index = new RAMDirectory();
 		IndexWriterConfig config = new IndexWriterConfig(analyzer);
@@ -45,7 +59,7 @@ public class SearchEngine {
 			Document document = new Document();
 
 			String name = file.getName();
-			
+
 			document.add(new TextField("name", name, Field.Store.YES));
 
 			Reader reader = new FileReader(file);
@@ -53,33 +67,36 @@ public class SearchEngine {
 
 			w.addDocument(document);
 		}
-		psearch(searchString, w);
-		w.close();
-	}
 
-	private static void psearch(String searchString, IndexWriter index) throws IOException, ParseException {
-		StandardAnalyzer analyzer = new StandardAnalyzer();
-		Query q1 = new QueryParser("name", analyzer).parse(searchString);
-		Query q2 = new QueryParser("contents", analyzer).parse(searchString);
+		Query q1 = null;
+		Query q2 = null;
+		try {
+			q1 = new QueryParser("name", analyzer).parse(searchString);
+			q2 = new QueryParser("contents", analyzer).parse(searchString);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		int hitsPerPage = 10;
-		IndexReader reader = DirectoryReader.open(index);
+		IndexReader reader = DirectoryReader.open(w);
 		IndexSearcher searcher = new IndexSearcher(reader);
 		TopDocs docs1 = searcher.search(q1, hitsPerPage);
 		TopDocs docs2 = searcher.search(q2, hitsPerPage);
 		ScoreDoc[] hits = Arrays.copyOf(docs1.scoreDocs, docs1.scoreDocs.length + docs2.scoreDocs.length);
 		System.arraycopy(docs2.scoreDocs, 0, hits, docs1.scoreDocs.length, docs2.scoreDocs.length);
 
-		displayResults(hits, searcher);
-	}
-
-	private static void displayResults(ScoreDoc[] hits, IndexSearcher searcher) throws IOException {
-		System.out.println("Found " + hits.length + " hits.");
-
+		out.println("Found " + hits.length + " hits.<br>");
 		for (int i = 0; i < hits.length; ++i) {
 			int docId = hits[i].doc;
 			Document d = searcher.doc(docId);
-			System.out.println((i + 1) + ". " + "\t" + d.get("name"));
+			out.println((i + 1) + ". " + "\t" + d.get("name") + "<br>");
 		}
+
+		w.close();
+	}
+
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		doGet(request, response);
 	}
 }

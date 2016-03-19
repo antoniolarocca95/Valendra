@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+                      http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+  version="3.1"
+  metadata-complete="true">
+
+    <description>
+      Valendra
+    </description>
+    <display-name>Valendra</display-name>
+
+    <servlet>
+      <servlet-name>Upload</servlet-name>
+      <servlet-class>database.DatabaseUploading</servlet-class>
+    </servlet>
+    <servlet>
+      <servlet-name>Search</servlet-name>
+      <servlet-class>searchengine.SearchEngine</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Upload</servlet-name>
+        <url-pattern>/upload</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>Search</servlet-name>
+        <url-pattern>/search</url-pattern>
+    </servlet-mapping>
+
+<context-param> 
+	<description>Location to store uploaded file</description> 
+	<param-name>file-upload</param-name> 
+	<param-value>
+	/opt/tomcat/webapps/Valendra/filesDirectory/
+	</param-value> 
+</context-param>
+
+</web-app>

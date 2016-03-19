@@ -1,0 +1,7 @@
+sudo rm -r /opt/tomcat/webapps/Valendra/WEB-INF/classes/*
+pushd $(pwd)
+cd /home/antonio/Documents/301/301grouprepository3/Valendra
+mvn clean package
+popd
+sudo cp -arv /home/antonio/Documents/301/301grouprepository3/Valendra/target/classes/* /opt/tomcat/webapps/Valendra/WEB-INF/classes
+./restart_tomcat
