@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import database.DatabaseHandler;
 import database.DatabaseUploading;
+import searchengine.SearchEngine;
 
 public class Console {
 	public static void main(String[] args) throws IOException {
@@ -85,7 +86,11 @@ public class Console {
 	}
 
 	private static void search(String query) {
-
+		try {
+			SearchEngine.search(query);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	private static void upload(String doclocation) throws IOException {
