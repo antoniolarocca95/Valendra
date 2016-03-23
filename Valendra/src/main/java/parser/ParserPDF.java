@@ -10,7 +10,7 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.util.PDFTextStripper;
 
 public class ParserPDF extends Parser {
-	public static String parse(String path) {
+	public static String[] parse(String path) {
 		PDFTextStripper pdfStripper = null;
 		PDDocument pdDoc = null;
 		COSDocument cosDoc = null;
@@ -19,12 +19,15 @@ public class ParserPDF extends Parser {
 		try {
 			PDFParser parser = new PDFParser(new FileInputStream(file));
 			parser.parse();
+			cosDoc = parser.getDocument();
 			pdfStripper = new PDFTextStripper();
 			pdDoc = new PDDocument(cosDoc);
 			String parsedText = pdfStripper.getText(pdDoc);
-			return parsedText;
+			cosDoc.close();
+			pdDoc.close();		
+			return parsedText.split(pdfStripper.getLineSeparator());
 		} catch (IOException e) {
-			return "";
+			return null;
 		}
 	}
 }

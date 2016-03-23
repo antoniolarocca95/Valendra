@@ -28,6 +28,8 @@ import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.RAMDirectory;
 
+import parser.ParserPDF;
+
 /*Search Engine for Valendra
  *
  *This class is responsible for taking the parsed user input
@@ -37,6 +39,10 @@ import org.apache.lucene.store.RAMDirectory;
  *This will output a list of documents to be displaeyed on the front end.
  */
 public class SearchEngine extends HttpServlet {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String FILES_DIRECTORY;
 
 	public void init() {
@@ -57,13 +63,16 @@ public class SearchEngine extends HttpServlet {
 		File[] files = dir.listFiles();
 		for (File file : files) {
 			Document document = new Document();
-
 			String name = file.getName();
 
+			if (name.substring(name.length() - 3).equals("pdf")) {
+				String contents = Arrays.toString(ParserPDF.parse(FILES_DIRECTORY + name));
+				document.add(new TextField("contents", contents, Field.Store.YES));
+			} else {
+				Reader reader = new FileReader(file);
+				document.add(new TextField("contents", reader));
+			}
 			document.add(new TextField("name", name, Field.Store.YES));
-
-			Reader reader = new FileReader(file);
-			document.add(new TextField("contents", reader));
 
 			w.addDocument(document);
 		}
@@ -90,7 +99,7 @@ public class SearchEngine extends HttpServlet {
 		for (int i = 0; i < hits.length; ++i) {
 			int docId = hits[i].doc;
 			Document d = searcher.doc(docId);
-			out.println((i + 1) + ". " + "\t" + d.get("name") + "<br>");
+			out.println("<a href=\"result?document=" + d.get("name") + "\">" + d.get("name") + "</a><br />");
 		}
 
 		w.close();
