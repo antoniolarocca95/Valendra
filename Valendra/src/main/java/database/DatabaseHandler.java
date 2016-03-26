@@ -3,11 +3,14 @@ package database;
 import java.sql.*;
 
 public class DatabaseHandler {
+	public static void main (String args[]){
+		System.out.println(loginUser("d","e"));
+	}
 	public static Connection connectToDatabase() {
 		Connection c = null;
 		try {
 			Class.forName("org.sqlite.JDBC");
-			c = DriverManager.getConnection("jdbc:sqlite:Database.db");
+			c = DriverManager.getConnection("jdbc:sqlite:/opt/tomcat/webapps/Valendra/Database.db");
 			System.out.println("Database connected successful");
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -19,30 +22,39 @@ public class DatabaseHandler {
 	 * query our database based on a string will return a resultset object that
 	 * we can use to extract the info from our query
 	 */
-	public static ResultSet query(String query) {
+	public static boolean loginUser(String username, String password) {
+		String query = "SELECT * FROM tab_acc WHERE username = \"" + username + "\" AND password = \"" + password
+				+ "\"";
 		Connection c = connectToDatabase();
 		ResultSet res = null;
+		Statement stment = null;
+		Boolean ret = true;
 		try {
 			c.setAutoCommit(false);
-			Statement stment = c.createStatement();
+			stment = c.createStatement();
 			res = stment.executeQuery(query);
-			stment.close();
+
 			c.commit();
-			c.close();
+
 		} catch (Exception e) {
-
 		}
-		return res;
-	}
 
-	public static boolean loginUser(String username, String password) {
-		String sql = "SELECT * FROM tab_acc WHERE username = \"" + username + "\" AND password = \"" + password + "\"";
-		ResultSet result = query(sql);
-		if (result == null) {
-			return false;
-		} else {
-			return true;
+		try {
+			if (res == null || !res.next()) {
+				ret = false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
+
+		try {
+			stment.close();
+			c.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return ret;
 	}
 
 	/*

@@ -1,69 +1,46 @@
 package account;
 
-import java.sql.Date;
+import java.io.IOException;
 
-public class Accounts {
-  /*
-   * Static variables to keep track of account types
-   */
-  
-  static final int TYPE_STUDENT = 0;
-  static final int TYPE_PROFESSOR = 1;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-  /**
-   * All variables needed for an account
-   */
+import database.DatabaseHandler;
 
-  int accountType;
-  String firstName;
-  String lastName;
-  String email;
-  Date birthday;
+public class Accounts extends HttpServlet {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	public static boolean LOGGED_IN = false;
 
-  public Accounts() {
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		response.setContentType("text/html");
+		java.io.PrintWriter out = response.getWriter();
+		out.println("<form action=\"login\" method=\"post\" />");
+		out.println("<input type=\"text\" name=\"username\" />");
+		out.println("<br />");
+		out.println("<input type=\"password\" name=\"password\" />");
+		out.println("<br />");
+		out.println("<input type=\"submit\" value=\"Login\" />");
+		out.println("</form>");
+	}
 
-  }
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		response.setContentType("text/html");
+		java.io.PrintWriter out = response.getWriter();
 
-  /*
-   * Start of Getters and Setters, more functions to be added
-   */
-  public int getAccountType() {
-    return accountType;
-  }
-
-  public void setAccountType(int accountType) {
-    this.accountType = accountType;
-  }
-
-  public String getFirstName() {
-    return firstName;
-  }
-
-  public void setFirstName(String firstName) {
-    this.firstName = firstName;
-  }
-
-  public String getLastName() {
-    return lastName;
-  }
-
-  public void setLastName(String lastName) {
-    this.lastName = lastName;
-  }
-
-  public String getEmail() {
-    return email;
-  }
-
-  public void setEmail(String email) {
-    this.email = email;
-  }
-
-  public Date getBirthday() {
-    return birthday;
-  }
-
-  public void setBirthday(Date birthday) {
-    this.birthday = birthday;
-  }
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+		if (DatabaseHandler.loginUser(username, password)) {
+			out.println("<meta http-equiv=\"refresh\" content=\"0 url=http://localhost:8080/Valendra/home\" />");
+			LOGGED_IN = true;
+		} else {
+			out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/Valendra/login\" />");
+			out.println(
+					"<script>function myFunction() {alert(\"Invalid username or password\")}; myFunction();</script>");
+		}
+	}
 }
