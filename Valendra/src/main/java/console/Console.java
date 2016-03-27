@@ -18,7 +18,7 @@ public class Console extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		response.setContentType("text/html");
 		java.io.PrintWriter out = response.getWriter();
-		if (!Accounts.LOGGED_IN) {
+		if (Accounts.LOGGED_IN.equals("false")) {
 			out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/Valendra/login\" />");
 		} else {
 			out.println("<html>");
@@ -50,7 +50,7 @@ public class Console extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		response.setContentType("text/html");
 		java.io.PrintWriter out = response.getWriter();
-		Accounts.LOGGED_IN = false;
+		Accounts.LOGGED_IN = "false";
 		out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/Valendra/login\" />");
 		out.println("<script>function myFunction() {alert(\"You have been logged out\")}; myFunction();</script>");
 	}

@@ -3,14 +3,12 @@ package database;
 import java.sql.*;
 
 public class DatabaseHandler {
-	public static void main (String args[]){
-		System.out.println(loginUser("d","e"));
-	}
+
 	public static Connection connectToDatabase() {
 		Connection c = null;
 		try {
 			Class.forName("org.sqlite.JDBC");
-			c = DriverManager.getConnection("jdbc:sqlite:/opt/tomcat/webapps/Valendra/Database.db");
+			c = DriverManager.getConnection("jdbc:sqlite:/opt/tomcat/webapps/Valendra/resources/Database.db");
 			System.out.println("Database connected successful");
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -33,7 +31,6 @@ public class DatabaseHandler {
 			c.setAutoCommit(false);
 			stment = c.createStatement();
 			res = stment.executeQuery(query);
-
 			c.commit();
 
 		} catch (Exception e) {

@@ -14,7 +14,7 @@ public class Accounts extends HttpServlet {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	public static boolean LOGGED_IN = false;
+	public static String LOGGED_IN = "false";
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		response.setContentType("text/html");
@@ -26,6 +26,10 @@ public class Accounts extends HttpServlet {
 		out.println("<br />");
 		out.println("<input type=\"submit\" value=\"Login\" />");
 		out.println("</form>");
+		out.println("<form action=\"register\" method=\"get\" />");
+		out.println("<br />");
+		out.println("<input type=\"submit\" value=\"Register\" />");
+		out.println("</form>");
 	}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -34,13 +38,22 @@ public class Accounts extends HttpServlet {
 
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
-		if (DatabaseHandler.loginUser(username, password)) {
-			out.println("<meta http-equiv=\"refresh\" content=\"0 url=http://localhost:8080/Valendra/home\" />");
-			LOGGED_IN = true;
-		} else {
+
+		try {
+			password = Password.hash(password);
+			if (DatabaseHandler.loginUser(username, password)) {
+				out.println("<meta http-equiv=\"refresh\" content=\"0 url=http://localhost:8080/Valendra/home\" />");
+				LOGGED_IN = username;
+			} else {
+				out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/Valendra/login\" />");
+				out.println(
+						"<script>function myFunction() {alert(\"Invalid username or password\")}; myFunction();</script>");
+			}
+		} catch (Exception e) {
 			out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/Valendra/login\" />");
 			out.println(
 					"<script>function myFunction() {alert(\"Invalid username or password\")}; myFunction();</script>");
 		}
+
 	}
 }
