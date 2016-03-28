@@ -23,7 +23,8 @@ public class Console extends HttpServlet {
 		} else {
 			out.println("<html>");
 			out.println("<head>");
-			out.println("<title>File Uploading Form</title>");
+			out.println("<title>Valendra</title>");
+			out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"home.css\">");
 			out.println("</head>");
 			out.println("<body>");
 			out.println("<h3>File Upload:</h3>");

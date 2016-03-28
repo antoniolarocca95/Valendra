@@ -54,6 +54,13 @@ public class SearchEngine extends HttpServlet {
 		response.setContentType("text/html");
 		java.io.PrintWriter out = response.getWriter();
 		String searchString = request.getParameter("search");
+		
+		out.println("<html>");
+		out.println("<head>");
+		out.println("<title>Results</title>");
+		out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"search.css\">");
+		out.println("</head>");
+		out.println("<body>");
 
 		StandardAnalyzer analyzer = new StandardAnalyzer();
 		Directory index = new RAMDirectory();
@@ -101,7 +108,8 @@ public class SearchEngine extends HttpServlet {
 			Document d = searcher.doc(docId);
 			out.println("<a href=\"result?document=" + d.get("name") + "\">" + d.get("name") + "</a><br />");
 		}
-
+		out.println("</body>");
+		out.println("</html>");
 		w.close();
 	}
 

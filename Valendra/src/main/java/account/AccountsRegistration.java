@@ -35,7 +35,8 @@ public class AccountsRegistration extends HttpServlet {
 		java.io.PrintWriter out = response.getWriter();
 		out.println("<html>");
 		out.println("<head>");
-		out.println("<title>Register Form</title>");
+		out.println("<title>Register</title>");
+		out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"register.css\">");
 		out.println("</head>");
 		out.println("<body>");
 		out.println("<form action=\"register\" method=\"post\">");

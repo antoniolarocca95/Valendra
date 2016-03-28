@@ -19,6 +19,12 @@ public class Accounts extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		response.setContentType("text/html");
 		java.io.PrintWriter out = response.getWriter();
+		out.println("<html>");
+		out.println("<head>");
+		out.println("<title>Login</title>");
+		out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"login.css\">");
+		out.println("</head>");
+		out.println("<body>");
 		out.println("<form action=\"login\" method=\"post\" />");
 		out.println("<input type=\"text\" name=\"username\" />");
 		out.println("<br />");
@@ -30,6 +36,8 @@ public class Accounts extends HttpServlet {
 		out.println("<br />");
 		out.println("<input type=\"submit\" value=\"Register\" />");
 		out.println("</form>");
+		out.println("</body>");
+		out.println("</html>");
 	}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
