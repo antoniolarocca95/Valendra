@@ -58,6 +58,16 @@ public class Results extends HttpServlet {
 			out.println("<div id=\"myNav\" class=\"overlay\">");
 			out.println("<a href=\"javascript:void(0)\" class=\"closebtn\" onclick=\"closeNav()\">&times;</a>");
 			out.println("<div class=\"overlay-content\">");
+            //Starting the star-rating
+            out.println("<span class = \"star-rating\">");
+                out.println("<input type = \"radio\" name = \"rating\" value = \"1\"><i></i>)");
+                out.println("<input type = \"radio\" name = \"rating\" value = \"2\"><i></i>)");
+                out.println("<input type = \"radio\" name = \"rating\" value = \"3\"><i></i>");
+                out.println("<input type = \"radio\" name = \"rating\" value = \"4\"><i></i>");
+                out.println("<input type = \"radio\" name = \"rating\" value = \"5\"><i></i>");
+            out.println("</span>");
+            out.println("<strong class = \"class\">Choose a rating</strong>");
+            //Ending Star-rating
 			out.println("<a href=\"#\">Rate</a>");
 			out.println("<a href=\"#\">Comment</a>");
 			out.println("</div>");
