@@ -53,6 +53,12 @@ public class SearchEngine extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		response.setContentType("text/html");
 		java.io.PrintWriter out = response.getWriter();
+		out.println("<form action=\"search\" method=\"post\">");
+		out.println("<br />");
+		out.println("<input type=\"text\" name=\"search\" placeholder=\"Search\"/>");
+		out.println("<br />");
+		out.println("<input type=\"submit\" value=\"Search\" />");
+		out.println("</form>");
 		String searchString = request.getParameter("search");
 		if (AccountsLogin.LOGGED_IN.equals("false")) {
 			out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/Valendra/login\" />");
