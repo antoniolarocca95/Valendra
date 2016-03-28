@@ -28,6 +28,7 @@ import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.RAMDirectory;
 
+import account.Accounts;
 import parser.ParserPDF;
 
 /*Search Engine for Valendra
@@ -54,63 +55,66 @@ public class SearchEngine extends HttpServlet {
 		response.setContentType("text/html");
 		java.io.PrintWriter out = response.getWriter();
 		String searchString = request.getParameter("search");
-		
-		out.println("<html>");
-		out.println("<head>");
-		out.println("<title>Results</title>");
-		out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"search.css\">");
-		out.println("</head>");
-		out.println("<body>");
+		if (Accounts.LOGGED_IN.equals("false")) {
+			out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/Valendra/login\" />");
+		} else {
+			out.println("<html>");
+			out.println("<head>");
+			out.println("<title>Results</title>");
+			out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"search.css\">");
+			out.println("</head>");
+			out.println("<body>");
 
-		StandardAnalyzer analyzer = new StandardAnalyzer();
-		Directory index = new RAMDirectory();
-		IndexWriterConfig config = new IndexWriterConfig(analyzer);
-		IndexWriter w = new IndexWriter(index, config);
-		File dir = new File(FILES_DIRECTORY);
-		File[] files = dir.listFiles();
-		for (File file : files) {
-			Document document = new Document();
-			String name = file.getName();
+			StandardAnalyzer analyzer = new StandardAnalyzer();
+			Directory index = new RAMDirectory();
+			IndexWriterConfig config = new IndexWriterConfig(analyzer);
+			IndexWriter w = new IndexWriter(index, config);
+			File dir = new File(FILES_DIRECTORY);
+			File[] files = dir.listFiles();
+			for (File file : files) {
+				Document document = new Document();
+				String name = file.getName();
 
-			if (name.substring(name.length() - 3).equals("pdf")) {
-				String contents = Arrays.toString(ParserPDF.parse(FILES_DIRECTORY + name));
-				document.add(new TextField("contents", contents, Field.Store.YES));
-			} else {
-				Reader reader = new FileReader(file);
-				document.add(new TextField("contents", reader));
+				if (name.substring(name.length() - 3).equals("pdf")) {
+					String contents = Arrays.toString(ParserPDF.parse(FILES_DIRECTORY + name));
+					document.add(new TextField("contents", contents, Field.Store.YES));
+				} else {
+					Reader reader = new FileReader(file);
+					document.add(new TextField("contents", reader));
+				}
+				document.add(new TextField("name", name, Field.Store.YES));
+
+				w.addDocument(document);
 			}
-			document.add(new TextField("name", name, Field.Store.YES));
 
-			w.addDocument(document);
+			Query q1 = null;
+			Query q2 = null;
+			try {
+				q1 = new QueryParser("name", analyzer).parse(searchString);
+				q2 = new QueryParser("contents", analyzer).parse(searchString);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			int hitsPerPage = 10;
+			IndexReader reader = DirectoryReader.open(w);
+			IndexSearcher searcher = new IndexSearcher(reader);
+			TopDocs docs1 = searcher.search(q1, hitsPerPage);
+			TopDocs docs2 = searcher.search(q2, hitsPerPage);
+			ScoreDoc[] hits = Arrays.copyOf(docs1.scoreDocs, docs1.scoreDocs.length + docs2.scoreDocs.length);
+			System.arraycopy(docs2.scoreDocs, 0, hits, docs1.scoreDocs.length, docs2.scoreDocs.length);
+
+			out.println("Found " + hits.length + " hits.<br>");
+			for (int i = 0; i < hits.length; ++i) {
+				int docId = hits[i].doc;
+				Document d = searcher.doc(docId);
+				out.println("<a href=\"result?document=" + d.get("name") + "\">" + d.get("name") + "</a><br />");
+			}
+			out.println("</body>");
+			out.println("</html>");
+			w.close();
 		}
-
-		Query q1 = null;
-		Query q2 = null;
-		try {
-			q1 = new QueryParser("name", analyzer).parse(searchString);
-			q2 = new QueryParser("contents", analyzer).parse(searchString);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		int hitsPerPage = 10;
-		IndexReader reader = DirectoryReader.open(w);
-		IndexSearcher searcher = new IndexSearcher(reader);
-		TopDocs docs1 = searcher.search(q1, hitsPerPage);
-		TopDocs docs2 = searcher.search(q2, hitsPerPage);
-		ScoreDoc[] hits = Arrays.copyOf(docs1.scoreDocs, docs1.scoreDocs.length + docs2.scoreDocs.length);
-		System.arraycopy(docs2.scoreDocs, 0, hits, docs1.scoreDocs.length, docs2.scoreDocs.length);
-
-		out.println("Found " + hits.length + " hits.<br>");
-		for (int i = 0; i < hits.length; ++i) {
-			int docId = hits[i].doc;
-			Document d = searcher.doc(docId);
-			out.println("<a href=\"result?document=" + d.get("name") + "\">" + d.get("name") + "</a><br />");
-		}
-		out.println("</body>");
-		out.println("</html>");
-		w.close();
 	}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {

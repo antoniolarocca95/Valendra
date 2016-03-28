@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import account.Accounts;
 import parser.ParserPDF;
 
 public class Documents extends HttpServlet {
@@ -45,21 +46,45 @@ public class Documents extends HttpServlet {
 		response.setContentType("text/html");
 		java.io.PrintWriter out = response.getWriter();
 		String docName = request.getParameter("document");
-		if (docName.substring(docName.length() - 3, docName.length()).equals("pdf")) {
-			String[] text = ParserPDF.parse(FILES_DIRECTORY + docName);
-			for (String line : text) {
-				out.print(line + "<br />");
-			}
+		if (Accounts.LOGGED_IN.equals("false")) {
+			out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/Valendra/login\" />");
 		} else {
-			FileReader fr = new FileReader(FILES_DIRECTORY + docName);
-			BufferedReader br = new BufferedReader(fr);
-			String line;
-			out.println("<xmp>");
-			while ((line = br.readLine()) != null) {
-				out.println(line + "<br />");
+			out.println("<html>");
+			out.println("<head>");
+			out.println("<title>" + docName + "</title>");
+			out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"doc.css\">");
+			out.println("<script src=\"doc.js\"></script>");
+			out.println("</head>");
+			out.println("<body>");
+			out.println("<div id=\"myNav\" class=\"overlay\">");
+			out.println("<a href=\"javascript:void(0)\" class=\"closebtn\" onclick=\"closeNav()\">&times;</a>");
+			out.println("<div class=\"overlay-content\">");
+			out.println("<a href=\"#\">Rate</a>");
+			out.println("<a href=\"#\">Comment</a>");
+			out.println("</div>");
+			out.println("<div class=\"overlay-content\">");
+			out.println("</div>");
+			out.println("</div>");
+			out.println("<button class=\"o\" onclick=\"openNav()\"></button>");
+			out.println("</body>");
+			out.println("</html>");
+
+			if (docName.substring(docName.length() - 3, docName.length()).equals("pdf")) {
+				String[] text = ParserPDF.parse(FILES_DIRECTORY + docName);
+				for (String line : text) {
+					out.print(line + "<br />");
+				}
+			} else {
+				FileReader fr = new FileReader(FILES_DIRECTORY + docName);
+				BufferedReader br = new BufferedReader(fr);
+				String line;
+				out.println("<xmp>");
+				while ((line = br.readLine()) != null) {
+					out.println(line);
+				}
+				out.println("</xmp>");
+				br.close();
 			}
-			out.println("</xmp>");
-			br.close();
 		}
 	}
 }

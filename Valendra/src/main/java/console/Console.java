@@ -27,7 +27,7 @@ public class Console extends HttpServlet {
 			out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"home.css\">");
 			out.println("</head>");
 			out.println("<body>");
-			out.println("<h3>File Upload:</h3>");
+			out.println("<h3>Welcome</h3>");
 			out.println("Select a file to upload: <br />");
 			out.println("<form action=\"upload\" method=\"post\" enctype=\"multipart/form-data\">");
 			out.println("<input type=\"file\" name=\"file\" size=\"50\" />");
@@ -36,7 +36,7 @@ public class Console extends HttpServlet {
 			out.println("</form>");
 			out.println("<form action=\"search\" method=\"post\">");
 			out.println("<br />");
-			out.println("<input type=\"text\" name=\"search\" placeholder=\"search\"/>");
+			out.println("<input type=\"text\" name=\"search\" placeholder=\"Search\"/>");
 			out.println("<br />");
 			out.println("<input type=\"submit\" value=\"Search\" />");
 			out.println("</form>");

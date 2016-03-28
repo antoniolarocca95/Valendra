@@ -21,8 +21,7 @@ public class DatabaseHandler {
 	 * we can use to extract the info from our query
 	 */
 	public static boolean loginUser(String username, String password) {
-		String query = "SELECT * FROM tab_acc WHERE username = \"" + username + "\" AND password = \"" + password
-				+ "\"";
+		String query = "SELECT * FROM tab_acc WHERE username = '" + username + "' AND password = '" + password + "'";
 		Connection c = connectToDatabase();
 		ResultSet res = null;
 		Statement stment = null;

@@ -55,6 +55,7 @@ public class AccountsRegistration extends HttpServlet {
 		out.println("<br />");
 		out.println("<input type=\"submit\" value=\"Register\" />");
 		out.println("</form>");
+		out.println("<form action=\">");
 		out.println("</body>");
 		out.println("</html>");
 	}
