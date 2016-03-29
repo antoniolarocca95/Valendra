@@ -126,7 +126,6 @@
 *,
 ::after,
 ::before {
-  height: 100%;
   padding: 0;
   margin: 0;
   box-sizing: border-box;
@@ -137,11 +136,39 @@ body {
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 }
 body::before {
-  height: 100%;
   content: '';
   width: 0;
   background: red;
   vertical-align: middle;
   display: inline-block;
+}
+
+#text{
+	position: absolute;
+	top: 0;
+	left: 0;
+	text-align: left;
+}
+
+#commentbox{
+	text-align: start;
+	vertical-align: text-top;
+	width:500px;
+	height:100px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.float{
+	height: 30px;
+	width: 100px;
+	float: left;
+	position: relative;
+	left: 50%;
+	margin-left: 25px;
+}
+
+.class {
+	color: white;
 }
 

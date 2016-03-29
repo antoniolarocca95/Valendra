@@ -1,3 +1,15 @@
 html{
 	background: url(odd_wallpaper.jpg);
 }
+
+a:link {
+	color: 00FFFF;
+}
+
+a:visited {
+	color: 00FFFF;
+}
+
+a:hover {
+	color: hotpink;
+}
