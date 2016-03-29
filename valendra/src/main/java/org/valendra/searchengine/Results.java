@@ -58,7 +58,7 @@ public class Results extends HttpServlet {
 			out.println("<div id=\"myNav\" class=\"overlay\">");
 			out.println("<a href=\"javascript:void(0)\" class=\"closebtn\" onclick=\"closeNav()\">&times;</a>");
 			out.println("<div class=\"overlay-content\">");
-			out.println("<form action=\"comments\" method=\"post\">");
+			out.println("<form action=\"comments?document=" + docName + "\" method=\"post\">");
 			// Starting the star-rating
 			out.println("<strong class = \"class\">Choose a rating</strong>");
 			out.println("<span class = \"star-rating\">");
@@ -74,7 +74,8 @@ public class Results extends HttpServlet {
 					"<textarea placeholder = \"Comment\" wrap = \"hard\" cols = \"20\" id = \"commentbox\" type = \"text\" name = \"comments\"></textarea><br>");
 			out.println("<input type=\"submit\" class=\"float\" id=\"sub\" value=\"Submit\" />");
 			out.println("</form>");
-			out.println("<input type=\"submit\" class=\"float\" id=\"view\" value=\"Comments\" />");
+			out.println(
+					"<a href=\"comments?document=" + docName + "\" class=\"float\" id=\"Comments\" />Comments</a>");
 			out.println("</div>");
 			out.println("</div>");
 			out.println("<button class=\"o\" onclick=\"openNav()\"></button>");

@@ -1,8 +1,6 @@
 package org.valendra.accounts;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.Statement;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,19 +14,6 @@ public class AccountsRegistration extends HttpServlet {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
-	public static void addUser(String firstname, String lastname, String email, String username, String password)
-			throws Exception {
-		Connection c = DatabaseHandler.connectToDatabase();
-		c.setAutoCommit(false);
-		Statement stment = c.createStatement();
-		String sql = "insert into tab_acc " + "values (\"" + firstname + "\", \"" + lastname + "\", \"" + email
-				+ "\", \"" + username + "\", \"" + password + "\");";
-		stment.executeUpdate(sql);
-		stment.close();
-		c.commit();
-		c.close();
-	}
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		response.setContentType("text/html");
@@ -76,7 +61,7 @@ public class AccountsRegistration extends HttpServlet {
 			try {
 				String hash = Password.hash(password);
 				try {
-					addUser(firstname, lastname, email, username, hash);
+					DatabaseHandler.addUser(firstname, lastname, email, username, hash);
 					out.println(
 							"<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/Valendra/login\" />");
 				} catch (Exception e) {
