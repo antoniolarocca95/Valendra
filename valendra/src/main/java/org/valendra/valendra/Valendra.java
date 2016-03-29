@@ -27,6 +27,19 @@ public class Valendra extends HttpServlet {
 			out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"home.css\">");
 			out.println("</head>");
 			out.println("<body>");
+
+			out.println("<ul>");
+			out.println("<li><a href=\"#Logout\">Logout</a></li>");
+			out.println("<li><a href=\"Find\">Buddy</a></li>");
+			out.println("<li><a href=\"#Upload\">Upload</a></li>");
+			out.println("<li><a href=\"#AccountInfo\">Account</a></li>");
+			out.println("</ul>");
+			out.println("<div class=\"dropdown\">");
+			out.println("<button class=\"dropbtn\" id=\"star\"></button>");
+			out.println("<div class=\"dropdown-content\">");
+			out.println("</div>");
+			out.println("</div>");
+
 			out.println("<h3>Welcome</h3>");
 			out.println("Select a file to upload: <br />");
 			out.println("<form action=\"upload\" method=\"post\" enctype=\"multipart/form-data\">");
