@@ -69,6 +69,7 @@ public class SearchEngine extends HttpServlet {
 			out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"search.css\">");
 			out.println("</head>");
 			out.println("<body>");
+			out.println("<div class=\"results\">");
 
 			StandardAnalyzer analyzer = new StandardAnalyzer();
 			Directory index = new RAMDirectory();
@@ -116,6 +117,7 @@ public class SearchEngine extends HttpServlet {
 				Document d = searcher.doc(docId);
 				out.println("<a href=\"result?document=" + d.get("name") + "\">" + d.get("name") + "</a><br />");
 			}
+			out.println("</div>");
 			out.println("</body>");
 			out.println("</html>");
 			w.close();
