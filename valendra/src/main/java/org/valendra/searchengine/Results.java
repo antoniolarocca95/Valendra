@@ -26,6 +26,10 @@ public class Results extends HttpServlet {
     response.setContentType("text/html");
     java.io.PrintWriter out = response.getWriter();
     String docName = request.getParameter("document");
+
+    out.println("<a href=\"filesDirectory/" + docName + "\" download=\"" + docName
+        + "\">Download this file</a>");
+
     if (AccountsLogin.LOGGED_IN.equals("false")) {
       out.println(
           "<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/Valendra/login\" />");
