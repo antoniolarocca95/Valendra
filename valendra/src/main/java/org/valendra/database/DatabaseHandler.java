@@ -59,6 +59,56 @@ public class DatabaseHandler {
 
 		return ret;
 	}
+	
+	public static void deleteUser(String username)
+	{
+		Connection c = DatabaseHandler.connectToDatabase();
+		try {
+			c.setAutoCommit(false);
+			Statement stment = c.createStatement();
+			String sql = "delete from tab_acc where username='" + username + "';";
+			stment.executeUpdate(sql);
+			stment.close();
+			c.commit();
+			c.close();
+		} catch (Exception e) {
+
+		}
+	}
+	
+	public static ArrayList<String> findBuddy(String parameter, String input)
+	{
+		
+		String query = "select * from tab_acc where " + parameter + " like '%" + input + "';";
+		Connection c = DatabaseHandler.connectToDatabase();
+		ResultSet res = null;
+		Statement stment = null;
+		ArrayList<String> buddies = new ArrayList<String>();
+		try {
+			c.setAutoCommit(false);
+			stment = c.createStatement();
+			res = stment.executeQuery(query);
+			c.commit();
+			if (res == null) {
+				return buddies;
+			}
+			while (res.next()) {
+				buddies.add(res.getString(1));
+				buddies.add(res.getString(2));
+				buddies.add(res.getString(3));
+				buddies.add(res.getString(4));
+				
+			}
+
+			res.close();
+			stment.close();
+			c.close();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return buddies;
+			
+	}
 
 	public static void addUser(String firstname, String lastname, String email, String username, String password) {
 		Connection c = DatabaseHandler.connectToDatabase();
@@ -112,7 +162,40 @@ public class DatabaseHandler {
 			}
 		}
 	}
+	
+	public static ArrayList<String> getAccountInformation(String user)
+	{
+		String query = "select * from tab_acc where username ='" + user + "';";
+		Connection c = DatabaseHandler.connectToDatabase();
+		ResultSet res = null;
+		Statement stment = null;
+		ArrayList<String> accountInfo = new ArrayList<String>();
+		try {
+			c.setAutoCommit(false);
+			stment = c.createStatement();
+			res = stment.executeQuery(query);
+			c.commit();
+			if (res == null) {
+				return accountInfo;
+			}
+			while (res.next()) {
+				accountInfo.add(res.getString(1));
+				accountInfo.add(res.getString(2));
+				accountInfo.add(res.getString(3));
+				accountInfo.add(res.getString(4));
+				accountInfo.add(res.getString(5));
+			}
 
+			res.close();
+			stment.close();
+			c.close();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return accountInfo;
+		
+	}
+	
 	public static ArrayList<String> getComments(String file) {
 		String query = "SELECT * FROM tab_comment WHERE file = '" + file + "';";
 		Connection c = DatabaseHandler.connectToDatabase();
@@ -172,18 +255,4 @@ public class DatabaseHandler {
 		return Integer.toString(stars) + " / 5";
 	}
 
-	public static String[] getAccountInformation() {
-		String username = AccountsLogin.LOGGED_IN;
-		/*
-		 * Use the username Get Name, Last Name, email return that shit
-		 */
-		return null;
-	}
-
-	public static void newInfo(String firstname, String lastname, String email, String username, String password) {
-		/*
-		 * delete old user
-		 */
-		addUser(firstname, lastname, email, username, password);
-	}
 }

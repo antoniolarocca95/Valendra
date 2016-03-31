@@ -29,6 +29,7 @@ import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.RAMDirectory;
 
 import org.valendra.accounts.AccountsLogin;
+import org.valendra.valendra.Header;
 
 /*Search Engine for Valendra
  *
@@ -53,6 +54,8 @@ public class SearchEngine extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		response.setContentType("text/html");
 		java.io.PrintWriter out = response.getWriter();
+		Header.drawHeader(out);
+		out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"upload.css\">"); 
 		out.println("<form action=\"search\" method=\"post\">");
 		out.println("<br />");
 		out.println("<input type=\"text\" name=\"search\" placeholder=\"Search\"/>");

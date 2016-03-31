@@ -31,19 +31,31 @@ public class Upload extends HttpServlet {
 	}
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		// Check that we have a file upload request
-		isMultipart = ServletFileUpload.isMultipartContent(request);
+
 		response.setContentType("text/html");
 		java.io.PrintWriter out = response.getWriter();
+		Header.drawHeader(out);
+		out.println("<h1>Upload</h1>");
+		out.println(
+				"<div style=\"width:400px; position:relative; top:200px; margin-right:auto; margin-left:auto; border:1px hidden #000;\">");
+		out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"upload.css\">");
+		out.println("<form action=\"upload\" method=\"post\" enctype=\"multipart/form-data\">");
+		out.println("<input type=\"file\" name=\"file\" size=\"50\" />");
+		out.println("<br />");
+		out.println("<input type=\"submit\" value=\"Upload File\" />");
+		out.println("</form>");
+		out.println("</div>");
+
+	}
+
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		response.setContentType("text/html");
+		java.io.PrintWriter out = response.getWriter();
+		// Check that we have a file upload request
+		isMultipart = ServletFileUpload.isMultipartContent(request);
 		if (!isMultipart) {
-			out.println("<html>");
-			out.println("<head>");
-			out.println("<title>Servlet upload</title>");
-			out.println("</head>");
-			out.println("<body>");
-			out.println("<p>No file uploaded</p>");
-			out.println("</body>");
-			out.println("</html>");
+			out.println("<script>alert(\"File not uploaded!\");</script>");
+			out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/Valendra/upload\" />");
 			return;
 		}
 		DiskFileItemFactory factory = new DiskFileItemFactory();
@@ -64,11 +76,6 @@ public class Upload extends HttpServlet {
 			// Process the uploaded file items
 			Iterator<FileItem> i = fileItems.iterator();
 
-			out.println("<html>");
-			out.println("<head>");
-			out.println("<title>Servlet upload</title>");
-			out.println("</head>");
-			out.println("<body>");
 			while (i.hasNext()) {
 				FileItem fi = (FileItem) i.next();
 				if (!fi.isFormField()) {
@@ -81,17 +88,13 @@ public class Upload extends HttpServlet {
 						file = new File(filePath + fileName.substring(fileName.lastIndexOf("\\") + 1));
 					}
 					fi.write(file);
-					out.println("Uploaded Filename: " + fileName + "<br>");
+					out.println("<script>alert(\"File uploaded!\");</script>");
+					out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/Valendra\" />");
 				}
 			}
-			out.println("</body>");
-			out.println("</html>");
-		} catch (Exception ex) {
-			out.println(ex);
-		}
-	}
 
-	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		doGet(request, response);
+		} catch (Exception ex) {
+			out.println("Invalid file");
+		}
 	}
 }
