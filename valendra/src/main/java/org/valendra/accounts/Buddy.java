@@ -22,13 +22,16 @@ public class Buddy extends HttpServlet {
       out.println(
           "<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/Valendra/login\" />");
     } else {
+      out.println("<head>");
+      out.println("<title>Valendra</title>");
+      out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"buddy.css\">");
+      out.println("</head>");
       out.println("<h1>Find a study buddy</h1>");
-      out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"home.css\">");
       out.println("<form action=\"buddy\" method=\"post\">");
-      out.println("<input type=\"radio\" name=\"buddy\" value=\"firstname\"> First Name<br>");
-      out.println("<input type=\"radio\" name=\"buddy\" value=\"lastname\"> Last Name<br>");
-      out.println("<input type=\"radio\" name=\"buddy\" value=\"email\"> Email Address<br>");
-      out.println("<input type=\"radio\" name=\"buddy\" value=\"username\"> Username<br>");
+      out.println("<input type=\"radio\" name=\"buddy\" value=\"firstname\"><div id=\"t\">First Name</div><br>");
+      out.println("<input type=\"radio\" name=\"buddy\" value=\"lastname\"><div id=\"t\">Last Name</div><br>");
+      out.println("<input type=\"radio\" name=\"buddy\" value=\"email\"><div id=\"t\">Email Address</div><br>");
+      out.println("<input type=\"radio\" name=\"buddy\" value=\"username\"><div id=\"t\">Username</div><br>");
       out.println("<input type=\"text\" name=\"search\" placeholder=\"Search\"><br>");
       out.println("<input type=\"submit\" value=\"Find Buddy\" />");
       out.println("<br />");

@@ -26,7 +26,7 @@ public class AccountsLogin extends HttpServlet {
     out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"login.css\">");
     out.println("</head>");
     out.println("<body>");
-    out.println("<h1>UTM Search Engine</h1>");
+    out.println("<h1>Valendra</h1>");
     out.println(
         "<div style=\"width:400px; position:relative; top:200px; margin-right:auto; margin-left:auto; border:1px hidden #000;\">");
     out.println("<form action=\"login\" method=\"post\" />");
@@ -34,8 +34,8 @@ public class AccountsLogin extends HttpServlet {
     out.println("<label for=\"username\">Username </label>");
     out.println("<input type=\"text\" name=\"username\" />");
     out.println("<br />");
-    out.println("<label for=\"password\">Password </label>");
-    out.println("<input type=\"password\" name=\"password\" />");
+    out.println("<label id=\"ps\" for=\"password\">Password </label>");
+    out.println("<input id=\"ps\" type=\"password\" name=\"password\" />");
     out.println("<br />");
     out.println("<input type=\"submit\" value=\"Login\" />");
     out.println("</form>");

@@ -22,14 +22,17 @@ public class Account extends HttpServlet {
       out.println(
           "<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/Valendra/login\" />");
     } else {
-      out.println("<h1>Account Information</h1>");
+      out.println("<head>");
+      out.println("<title>Valendra</title>");
       out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"account.css\">");
+      out.println("</head>");
+      out.println("<h1>Account Information</h1>");      
       ArrayList<String> accountInfo =
           DatabaseHandler.getAccountInformation(AccountsLogin.LOGGED_IN);
       out.println(
           "<div style=\"width:400px; position:relative; top:150px; margin-right:auto; margin-left:auto; border:1px hidden #000;\">");
       out.println("<form action=\"account\" method=\"post\">");
-      out.println("<p class=\"paragraph\"> Username: " + accountInfo.get(3) + "</p>");
+      out.println("<p class=\"paragraph\"> Username: " + accountInfo.get(3) + "</p><br>");
       out.println("<p class=\"paragraph\"> First name: " + accountInfo.get(0)
           + "</p><input type=\"text\" name=\"newfirstname\" placeholder=\"New First Name\"><br>");
       out.println("<p class=\"paragraph\"> Last name: " + accountInfo.get(1)

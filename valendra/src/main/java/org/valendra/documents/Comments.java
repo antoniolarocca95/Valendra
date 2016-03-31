@@ -25,6 +25,10 @@ public class Comments extends HttpServlet {
       out.println(
           "<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/Valendra/login\" />");
     } else {
+      out.println("<head>");
+      out.println("<title>Valendra</title>");
+      out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"comments.css\">");
+      out.println("</head>");
       String docName = request.getParameter("document");
       out.println(DatabaseHandler.getRating(docName) + "<br />");
       ArrayList<String> comments = DatabaseHandler.getComments(docName);
@@ -58,7 +62,9 @@ public class Comments extends HttpServlet {
       String comment = request.getParameter("comments");
       String docName = request.getParameter("document");
       DatabaseHandler.comment(r, comment, docName);
-      out.println("Comment added");
+      out.print("<script>function myFunction() {alert(\"Invalid username or password\")}; myFunction();</script>");
+      out.println(
+          "<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/Valendra/result?document=" + docName + "/>");
     }
   }
 }

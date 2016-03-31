@@ -24,11 +24,13 @@ public class BuddyAccount extends HttpServlet {
           "<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/Valendra/login\" />");
     } else {
       Header.drawHeader(out);
-
+      out.println("<head>");
+      out.println("<title>Valendra</title>");
+      out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"account.css\">");
+      out.println("</head>");
       String user = request.getParameter("user");
 
-      out.println("<h1>Account Information</h1>");
-      out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"account.css\">");
+      out.println("<h1>Account Information</h1>");      
 
       ArrayList<String> accountInfo = DatabaseHandler.getAccountInformation(user);
 

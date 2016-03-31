@@ -56,13 +56,7 @@ public class SearchEngine extends HttpServlet {
     response.setContentType("text/html");
     java.io.PrintWriter out = response.getWriter();
     Header.drawHeader(out);
-    out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"upload.css\">");
-    out.println("<form action=\"search\" method=\"post\">");
-    out.println("<br />");
-    out.println("<input type=\"text\" name=\"search\" placeholder=\"Search\"/>");
-    out.println("<br />");
-    out.println("<input type=\"submit\" value=\"Search\" />");
-    out.println("</form>");
+    out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"search.css\">");
     String searchString = request.getParameter("search");
     if (AccountsLogin.LOGGED_IN.equals("false")) {
       out.println(
@@ -70,8 +64,7 @@ public class SearchEngine extends HttpServlet {
     } else {
       out.println("<html>");
       out.println("<head>");
-      out.println("<title>Results</title>");
-      out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"search.css\">");
+      out.println("<title>Valendra</title>");
       out.println("</head>");
       out.println("<body>");
       out.println("<div class=\"results\">");
