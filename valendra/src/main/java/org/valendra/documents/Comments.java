@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.valendra.accounts.AccountsLogin;
 import org.valendra.database.DatabaseHandler;
+import org.valendra.valendra.Header;
 
 public class Comments extends HttpServlet {
   /**
@@ -25,16 +26,19 @@ public class Comments extends HttpServlet {
       out.println(
           "<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/Valendra/login\" />");
     } else {
+      Header.drawHeader(out);
       out.println("<head>");
       out.println("<title>Valendra</title>");
       out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"comments.css\">");
       out.println("</head>");
+      out.println("<div>");
       String docName = request.getParameter("document");
-      out.println(DatabaseHandler.getRating(docName) + "<br />");
+      out.println(DatabaseHandler.getRating(docName) + "<br /><br />");
       ArrayList<String> comments = DatabaseHandler.getComments(docName);
       for (String comment : comments) {
         out.println(comment + "<br />");
       }
+      out.println("</div>");
     }
   }
 
@@ -62,9 +66,9 @@ public class Comments extends HttpServlet {
       String comment = request.getParameter("comments");
       String docName = request.getParameter("document");
       DatabaseHandler.comment(r, comment, docName);
-      out.print("<script>function myFunction() {alert(\"Invalid username or password\")}; myFunction();</script>");
+      out.print("<script>function myFunction() {alert(\"Comment added\")}; myFunction();</script>");
       out.println(
-          "<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/Valendra/result?document=" + docName + "/>");
+          "<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/Valendra/result?document=" + docName + "\"/>");
     }
   }
 }
