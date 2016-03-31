@@ -82,7 +82,7 @@ public class DatabaseHandler {
 
   public static ArrayList<String> findBuddy(String parameter, String input) {
 
-    String query = "select * from tab_acc where ? like ?;";
+    String query = "select * from tab_acc where " + parameter + " like ?;";
     Connection c = DatabaseHandler.connectToDatabase();
     ResultSet res = null;
     PreparedStatement prep = null;
@@ -90,9 +90,8 @@ public class DatabaseHandler {
     try {
       c.setAutoCommit(false);
       prep = c.prepareStatement(query);
-      prep.setString(1, parameter);
       input = "%" + input + "%";
-      prep.setString(2, input);
+      prep.setString(1, input);
       res = prep.executeQuery();
       c.commit();
       if (res == null) {
@@ -242,12 +241,12 @@ public class DatabaseHandler {
 
   }
 
-  public static ArrayList<String> getComments(String file) {
+  public static ArrayList<String[]> getComments(String file) {
     String query = "SELECT * FROM tab_comment WHERE file = ?;";
     Connection c = DatabaseHandler.connectToDatabase();
     ResultSet res = null;
     PreparedStatement prep = null;
-    ArrayList<String> comments = new ArrayList<String>();
+    ArrayList<String[]> comments = new ArrayList<String[]>();
     try {
       c.setAutoCommit(false);
       prep = c.prepareStatement(query);
@@ -258,7 +257,8 @@ public class DatabaseHandler {
         return comments;
       }
       while (res.next()) {
-        comments.add(res.getString(3));
+        String[] comment = {res.getString(2), res.getString(3)};
+        comments.add(comment);
       }
 
       res.close();
@@ -285,7 +285,6 @@ public class DatabaseHandler {
       c.commit();
 
       while (res.next()) {
-        System.out.println("in while");
         stars += Integer.parseInt((res.getString(3)));
         total++;
       }
@@ -302,7 +301,48 @@ public class DatabaseHandler {
     } catch (Exception e) {
       System.out.println(e.getMessage());
     }
-    return Integer.toString(stars) + " / 5";
+    return "Total Rating: " + Integer.toString(stars) + " / 5";
   }
 
+  public static void upload(String fileName) {
+    String query = "INSERT INTO tab_upload VALUES(?, ?)";
+    Connection c = DatabaseHandler.connectToDatabase();
+    PreparedStatement prep = null;
+    try {
+      c.setAutoCommit(false);
+      prep = c.prepareStatement(query);
+      prep.setString(1, AccountsLogin.LOGGED_IN);
+      prep.setString(2, fileName);
+      prep.executeUpdate();
+      c.commit();
+      prep.close();
+      c.close();
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
+  }
+
+  public static ArrayList<String> userUploads(String username) {
+    String query = "SELECT * FROM tab_upload WHERE username = ?";
+    Connection c = DatabaseHandler.connectToDatabase();
+    PreparedStatement prep = null;
+    ResultSet res = null;
+    ArrayList<String> uploads = new ArrayList<String>();
+    try {
+      c.setAutoCommit(false);
+      prep = c.prepareStatement(query);
+      prep.setString(1, username);
+      res = prep.executeQuery();
+      c.commit();
+      while (res.next()) {
+        uploads.add(res.getString(2));
+      }
+      res.close();
+      prep.close();
+      c.close();
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
+    return uploads;
+  }
 }

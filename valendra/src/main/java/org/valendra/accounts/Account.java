@@ -20,7 +20,7 @@ public class Account extends HttpServlet {
     Header.drawHeader(out);
     if (AccountsLogin.LOGGED_IN.equals("false")) {
       out.println(
-          "<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/Valendra/login\" />");
+          "<meta http-equiv=\"refresh\" content=\"0; url=/Valendra/login\" />");
     } else {
       out.println("<head>");
       out.println("<title>Valendra</title>");
@@ -58,7 +58,7 @@ public class Account extends HttpServlet {
     java.io.PrintWriter out = response.getWriter();
     if (AccountsLogin.LOGGED_IN.equals("false")) {
       out.println(
-          "<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/Valendra/login\" />");
+          "<meta http-equiv=\"refresh\" content=\"0; url=/Valendra/login\" />");
     } else {
       String fName = request.getParameter("newfirstname");
       String lName = request.getParameter("newlastname");
@@ -93,7 +93,7 @@ public class Account extends HttpServlet {
         DatabaseHandler.deleteUser(AccountsLogin.LOGGED_IN);
         DatabaseHandler.addUser(fName, lName, email, AccountsLogin.LOGGED_IN, currentUserPassword);
         out.println(
-            "<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/Valendra/account\" />");
+            "<meta http-equiv=\"refresh\" content=\"0; url=/Valendra/account\" />");
 
       }
 
@@ -103,7 +103,7 @@ public class Account extends HttpServlet {
           || confirmPass.equalsIgnoreCase("")) {
         out.println("<script>alert(\"Missing some password fields!\");</script>");
         out.println(
-            "<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/Valendra/account\" />");
+            "<meta http-equiv=\"refresh\" content=\"0; url=/Valendra/account\" />");
       }
 
       // if all three are full, then we know they wanna change their password,
@@ -129,11 +129,11 @@ public class Account extends HttpServlet {
           DatabaseHandler.addUser(fName, lName, email, AccountsLogin.LOGGED_IN,
               Password.hash(newPass));
           out.println(
-              "<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/Valendra/account\" />");
+              "<meta http-equiv=\"refresh\" content=\"0; url=/Valendra/account\" />");
         } else {
           out.println("<script>alert(\"Invalid password or passwords dont match!\");</script>");
           out.println(
-              "<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/Valendra/account\" />");
+              "<meta http-equiv=\"refresh\" content=\"0; url=/Valendra/account\" />");
         }
       }
     }

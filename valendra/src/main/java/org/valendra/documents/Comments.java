@@ -24,7 +24,7 @@ public class Comments extends HttpServlet {
     java.io.PrintWriter out = response.getWriter();
     if (AccountsLogin.LOGGED_IN.equals("false")) {
       out.println(
-          "<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/Valendra/login\" />");
+          "<meta http-equiv=\"refresh\" content=\"0; url=/Valendra/login\" />");
     } else {
       Header.drawHeader(out);
       out.println("<head>");
@@ -34,9 +34,9 @@ public class Comments extends HttpServlet {
       out.println("<div>");
       String docName = request.getParameter("document");
       out.println(DatabaseHandler.getRating(docName) + "<br /><br />");
-      ArrayList<String> comments = DatabaseHandler.getComments(docName);
-      for (String comment : comments) {
-        out.println(comment + "<br />");
+      ArrayList<String[]> comments = DatabaseHandler.getComments(docName);
+      for (String[] comment : comments) {
+        out.println(comment[1] + " -" + comment[0] + "<br />");
       }
       out.println("</div>");
     }
@@ -48,7 +48,7 @@ public class Comments extends HttpServlet {
     java.io.PrintWriter out = response.getWriter();
     if (AccountsLogin.LOGGED_IN.equals("false")) {
       out.println(
-          "<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/Valendra/login\" />");
+          "<meta http-equiv=\"refresh\" content=\"0; url=/Valendra/login\" />");
     } else {
       String rating = request.getParameter("rating");
       int r = -1;
@@ -68,7 +68,7 @@ public class Comments extends HttpServlet {
       DatabaseHandler.comment(r, comment, docName);
       out.print("<script>function myFunction() {alert(\"Comment added\")}; myFunction();</script>");
       out.println(
-          "<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/Valendra/result?document=" + docName + "\"/>");
+          "<meta http-equiv=\"refresh\" content=\"0; url=/Valendra/result?document=" + docName + "\"/>");
     }
   }
 }

@@ -32,7 +32,7 @@ public class Results extends HttpServlet {
 
     if (AccountsLogin.LOGGED_IN.equals("false")) {
       out.println(
-          "<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/Valendra/login\" />");
+          "<meta http-equiv=\"refresh\" content=\"0; url=/Valendra/login\" />");
     } else {
       out.println("<html>");
       out.println("<head>");

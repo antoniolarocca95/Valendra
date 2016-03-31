@@ -63,17 +63,17 @@ public class AccountsLogin extends HttpServlet {
       password = Password.hash(password);
       if (DatabaseHandler.loginUser(username, password)) {
         out.println(
-            "<meta http-equiv=\"refresh\" content=\"0 url=http://localhost:8080/Valendra/home\" />");
+            "<meta http-equiv=\"refresh\" content=\"0 url=/Valendra/home\" />");
         LOGGED_IN = username;
       } else {
         out.println(
-            "<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/Valendra/login\" />");
+            "<meta http-equiv=\"refresh\" content=\"0; url=/Valendra/login\" />");
         out.println(
             "<script>function myFunction() {alert(\"Invalid username or password\")}; myFunction();</script>");
       }
     } catch (Exception e) {
       out.println(
-          "<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/Valendra/login\" />");
+          "<meta http-equiv=\"refresh\" content=\"0; url=/Valendra/login\" />");
       out.println(
           "<script>function myFunction() {alert(\"Invalid username or password\")}; myFunction();</script>");
     }

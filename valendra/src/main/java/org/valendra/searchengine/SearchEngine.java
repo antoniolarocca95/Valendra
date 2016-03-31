@@ -60,7 +60,7 @@ public class SearchEngine extends HttpServlet {
     String searchString = request.getParameter("search");
     if (AccountsLogin.LOGGED_IN.equals("false")) {
       out.println(
-          "<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/Valendra/login\" />");
+          "<meta http-equiv=\"refresh\" content=\"0; url=/Valendra/login\" />");
     } else {
       out.println("<html>");
       out.println("<head>");
@@ -112,8 +112,10 @@ public class SearchEngine extends HttpServlet {
 
       out.println("<a href=\"https://www.google.ca/?gws_rd=ssl#q=" + searchString
           + "\">Google's got your back!</a><br />");
-
-      out.println("Found " + hits.length + " hits.<br>");
+      out.println("<br>");
+      out.println("<div id=\"t\">");
+      out.println("Found " + hits.length + " hits.");
+      out.println("</div>");
       for (int i = 0; i < hits.length; ++i) {
         int docId = hits[i].doc;
         Document d = searcher.doc(docId);

@@ -14,6 +14,7 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.valendra.accounts.AccountsLogin;
+import org.valendra.database.DatabaseHandler;
 
 public class Upload extends HttpServlet {
   /**
@@ -38,7 +39,7 @@ public class Upload extends HttpServlet {
     Header.drawHeader(out);
     if (AccountsLogin.LOGGED_IN.equals("false")) {
       out.println(
-          "<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/Valendra/login\" />");
+          "<meta http-equiv=\"refresh\" content=\"0; url=/Valendra/login\" />");
     } else {
       out.println("<head>");
       out.println("<title>Valendra</title>");
@@ -63,13 +64,13 @@ public class Upload extends HttpServlet {
     // Check that we have a file upload request
     if (AccountsLogin.LOGGED_IN.equals("false")) {
       out.println(
-          "<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/Valendra/login\" />");
+          "<meta http-equiv=\"refresh\" content=\"0; url=/Valendra/login\" />");
     } else {
       isMultipart = ServletFileUpload.isMultipartContent(request);
       if (!isMultipart) {
         out.println("<script>alert(\"File not uploaded!\");</script>");
         out.println(
-            "<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/Valendra/upload\" />");
+            "<meta http-equiv=\"refresh\" content=\"0; url=/Valendra/upload\" />");
         return;
       }
       DiskFileItemFactory factory = new DiskFileItemFactory();
@@ -98,16 +99,17 @@ public class Upload extends HttpServlet {
             // Write the file
             if (fileName.lastIndexOf("\\") >= 0) {
               file = new File(filePath + fileName.substring(fileName.lastIndexOf("\\")));
+              DatabaseHandler.upload(fileName.substring(fileName.lastIndexOf("\\")));
             } else {
               file = new File(filePath + fileName.substring(fileName.lastIndexOf("\\") + 1));
+              DatabaseHandler.upload(fileName.substring(fileName.lastIndexOf("\\") + 1));
             }
             fi.write(file);
             out.println("<script>alert(\"File uploaded!\");</script>");
             out.println(
-                "<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/Valendra\" />");
+                "<meta http-equiv=\"refresh\" content=\"0; url=/Valendra\" />");
           }
-        }
-
+        }        
       } catch (Exception ex) {
         out.println("Invalid file");
       }

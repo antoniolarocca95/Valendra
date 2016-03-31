@@ -21,7 +21,7 @@ public class BuddyAccount extends HttpServlet {
     java.io.PrintWriter out = response.getWriter();
     if (AccountsLogin.LOGGED_IN.equals("false")) {
       out.println(
-          "<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/Valendra/login\" />");
+          "<meta http-equiv=\"refresh\" content=\"0; url=/Valendra/login\" />");
     } else {
       Header.drawHeader(out);
       out.println("<head>");
@@ -30,7 +30,7 @@ public class BuddyAccount extends HttpServlet {
       out.println("</head>");
       String user = request.getParameter("user");
 
-      out.println("<h1>Account Information</h1>");      
+      out.println("<h1>Account Information</h1>");
 
       ArrayList<String> accountInfo = DatabaseHandler.getAccountInformation(user);
 
@@ -40,7 +40,29 @@ public class BuddyAccount extends HttpServlet {
       out.println("<p class=\"paragraph\"> First name: " + accountInfo.get(0) + "</p>");
       out.println("<p class=\"paragraph\"> Last name: " + accountInfo.get(1) + "</p>");
       out.println("<p class=\"paragraph\"> Email address: " + accountInfo.get(2) + "</p>");
+      out.println("<form action=\"buddyuser?user=" + user + "\" method=\"post\" />");
+      out.println("<input type=\"submit\" value=\"View Uploads\" />");
+      out.println("</form>");
       out.println("</div>");
     }
+  }
+
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    String user = request.getParameter("user");
+    ArrayList<String> uploads = DatabaseHandler.userUploads(user);
+
+    response.setContentType("text/html");
+    java.io.PrintWriter out = response.getWriter();
+    Header.drawHeader(out);
+    out.println("<head>");
+    out.println("<title>Valendra</title>");
+    out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"account.css\">");
+    out.println("</head>");
+
+    out.println("<div>");
+    for (String upload : uploads) {
+      out.println("<a href=\"result?document=" + upload + "\">" + upload + "</a><br />");
+    }
+    out.println("</div>");
   }
 }

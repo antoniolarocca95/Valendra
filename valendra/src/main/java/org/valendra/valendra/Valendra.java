@@ -20,7 +20,7 @@ public class Valendra extends HttpServlet {
     java.io.PrintWriter out = response.getWriter();
     if (AccountsLogin.LOGGED_IN.equals("false")) {
       out.println(
-          "<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/Valendra/login\" />");
+          "<meta http-equiv=\"refresh\" content=\"0; url=/Valendra/login\" />");
     } else {
       out.println("<html>");
       out.println("<head>");
@@ -55,7 +55,7 @@ public class Valendra extends HttpServlet {
     java.io.PrintWriter out = response.getWriter();
     AccountsLogin.LOGGED_IN = "false";
     out.println(
-        "<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/Valendra/login\" />");
+        "<meta http-equiv=\"refresh\" content=\"0; url=/Valendra/login\" />");
     out.println(
         "<script>function myFunction() {alert(\"You have been logged out\")}; myFunction();</script>");
 

@@ -67,7 +67,7 @@ public class AccountsRegistration extends HttpServlet {
       out.println(
           "<script>function myFunction() {alert(\"No field can be left blank\")}; myFunction();</script>");
       out.println(
-          "<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/Valendra/register\" />");
+          "<meta http-equiv=\"refresh\" content=\"0; url=/Valendra/register\" />");
     }
 
     if (cpassword.equals(password)) {
@@ -76,20 +76,20 @@ public class AccountsRegistration extends HttpServlet {
         try {
           DatabaseHandler.addUser(firstname, lastname, email, username, hash);
           out.println(
-              "<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/Valendra/login\" />");
+              "<meta http-equiv=\"refresh\" content=\"0; url=/Valendra/login\" />");
         } catch (Exception e) {
           out.println(e.getMessage());
         }
       } catch (Exception e) {
         out.println(
-            "<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/Valendra/register\" />");
+            "<meta http-equiv=\"refresh\" content=\"0; url=/Valendra/register\" />");
         out.println(
             "<script>function myFunction() {alert(\"Invalid Password\")}; myFunction();</script>");
       }
 
     } else {
       out.println(
-          "<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/Valendra/register\" />");
+          "<meta http-equiv=\"refresh\" content=\"0; url=/Valendra/register\" />");
       out.println(
           "<script>function myFunction() {alert(\"Invalid Password\")}; myFunction();</script>");
     }

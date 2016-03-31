@@ -20,7 +20,7 @@ public class Buddy extends HttpServlet {
     Header.drawHeader(out);
     if (AccountsLogin.LOGGED_IN.equals("false")) {
       out.println(
-          "<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/Valendra/login\" />");
+          "<meta http-equiv=\"refresh\" content=\"0; url=/Valendra/login\" />");
     } else {
       out.println("<head>");
       out.println("<title>Valendra</title>");
@@ -28,10 +28,14 @@ public class Buddy extends HttpServlet {
       out.println("</head>");
       out.println("<h1>Find a study buddy</h1>");
       out.println("<form action=\"buddy\" method=\"post\">");
-      out.println("<input type=\"radio\" name=\"buddy\" value=\"firstname\"><div id=\"t\">First Name</div><br>");
-      out.println("<input type=\"radio\" name=\"buddy\" value=\"lastname\"><div id=\"t\">Last Name</div><br>");
-      out.println("<input type=\"radio\" name=\"buddy\" value=\"email\"><div id=\"t\">Email Address</div><br>");
-      out.println("<input type=\"radio\" name=\"buddy\" value=\"username\"><div id=\"t\">Username</div><br>");
+      out.println(
+          "<input type=\"radio\" name=\"buddy\" value=\"firstname\"><div id=\"t\">First Name</div><br>");
+      out.println(
+          "<input type=\"radio\" name=\"buddy\" value=\"lastname\"><div id=\"t\">Last Name</div><br>");
+      out.println(
+          "<input type=\"radio\" name=\"buddy\" value=\"email\"><div id=\"t\">Email Address</div><br>");
+      out.println(
+          "<input type=\"radio\" name=\"buddy\" value=\"username\"><div id=\"t\">Username</div><br>");
       out.println("<input type=\"text\" name=\"search\" placeholder=\"Search\"><br>");
       out.println("<input type=\"submit\" value=\"Find Buddy\" />");
       out.println("<br />");
@@ -44,7 +48,7 @@ public class Buddy extends HttpServlet {
     java.io.PrintWriter out = response.getWriter();
     if (AccountsLogin.LOGGED_IN.equals("false")) {
       out.println(
-          "<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/Valendra/login\" />");
+          "<meta http-equiv=\"refresh\" content=\"0; url=/Valendra/login\" />");
     } else {
       String buddyRadio = request.getParameter("buddy");
       String input = request.getParameter("search");
@@ -72,23 +76,27 @@ public class Buddy extends HttpServlet {
       if (parameter.equalsIgnoreCase("")) {
         out.println("<script>alert(\"Select an option!\");</script>");
         out.println(
-            "<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/Valendra/buddy\" />");
+            "<meta http-equiv=\"refresh\" content=\"0; url=/Valendra/buddy\" />");
       }
 
       if (input.equalsIgnoreCase("")) {
         out.println("<script>alert(\"Missing input!\");</script>");
         out.println(
-            "<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/Valendra/buddy\" />");
+            "<meta http-equiv=\"refresh\" content=\"0; url=/Valendra/buddy\" />");
       }
 
       else if (!input.equalsIgnoreCase("")) {
         ArrayList<String> buddies = DatabaseHandler.findBuddy(parameter, input);
+        out.println("Found " + Integer.toString(buddies.size() / 4) + " buddies for you! <br>");
+        out.println("First Name | Last Name | Email | Username<br>");
         String text = "";
         for (int i = 0; i < buddies.size(); i += 1) {
-          text += buddies.get(i) + " ";
           if (((i + 1) % 4) == 0) {
+            text += buddies.get(i);
             out.println("<a href=\"buddyuser?user=" + buddies.get(i) + "\"/>" + text + "</a><br>");
             text = "";
+          } else {
+            text += buddies.get(i) + " | ";
           }
         }
       }
