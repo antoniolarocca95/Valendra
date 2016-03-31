@@ -10,12 +10,5 @@ public class Header {
     out.println("<li><a href=\"http://localhost:8080/Valendra/account\">Account</a></li>");
     out.println("<li><a href=\"http://localhost:8080/Valendra/home\">Search</a></li>");
     out.println("</ul>");
-    out.println("<div class=\"dropdown\">");
-    out.println("<button class=\"dropbtn\" id=\"star\"></button>");
-    out.println("<div class=\"dropdown-content\">");
-    out.println("</div>");
-    out.println("</div>");
-
   }
-
 }

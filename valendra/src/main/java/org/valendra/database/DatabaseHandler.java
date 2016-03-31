@@ -2,9 +2,9 @@ package org.valendra.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 
 import org.valendra.accounts.AccountsLogin;
@@ -29,16 +29,17 @@ public class DatabaseHandler {
    * the info from our query
    */
   public static boolean loginUser(String username, String password) {
-    String query = "SELECT * FROM tab_acc WHERE username = '" + username + "' AND password = '"
-        + password + "'";
+    PreparedStatement prep = null;
+    String query = "SELECT * FROM tab_acc WHERE username = ? AND password = ?";
     Connection c = connectToDatabase();
     ResultSet res = null;
-    Statement stment = null;
     Boolean ret = true;
     try {
       c.setAutoCommit(false);
-      stment = c.createStatement();
-      res = stment.executeQuery(query);
+      prep = c.prepareStatement(query);
+      prep.setString(1, username);
+      prep.setString(2, password);
+      res = prep.executeQuery();
       c.commit();
 
     } catch (Exception e) {
@@ -53,7 +54,7 @@ public class DatabaseHandler {
     }
 
     try {
-      stment.close();
+      prep.close();
       c.close();
     } catch (SQLException e) {
       e.printStackTrace();
@@ -64,13 +65,15 @@ public class DatabaseHandler {
 
   public static void deleteUser(String username) {
     Connection c = DatabaseHandler.connectToDatabase();
+    PreparedStatement prep = null;
     try {
       c.setAutoCommit(false);
-      Statement stment = c.createStatement();
-      String sql = "delete from tab_acc where username='" + username + "';";
-      stment.executeUpdate(sql);
-      stment.close();
+      String sql = "delete from tab_acc where username=?;";
+      prep = c.prepareStatement(sql);
+      prep.setString(1, username);
+      prep.executeUpdate();
       c.commit();
+      prep.close();
       c.close();
     } catch (Exception e) {
 
@@ -79,15 +82,18 @@ public class DatabaseHandler {
 
   public static ArrayList<String> findBuddy(String parameter, String input) {
 
-    String query = "select * from tab_acc where " + parameter + " like '%" + input + "%';";
+    String query = "select * from tab_acc where ? like ?;";
     Connection c = DatabaseHandler.connectToDatabase();
     ResultSet res = null;
-    Statement stment = null;
+    PreparedStatement prep = null;
     ArrayList<String> buddies = new ArrayList<String>();
     try {
       c.setAutoCommit(false);
-      stment = c.createStatement();
-      res = stment.executeQuery(query);
+      prep = c.prepareStatement(query);
+      prep.setString(1, parameter);
+      input = "%" + input + "%";
+      prep.setString(2, input);
+      res = prep.executeQuery();
       c.commit();
       if (res == null) {
         return buddies;
@@ -101,7 +107,7 @@ public class DatabaseHandler {
       }
 
       res.close();
-      stment.close();
+      prep.close();
       c.close();
     } catch (Exception e) {
       System.out.println(e.getMessage());
@@ -113,14 +119,19 @@ public class DatabaseHandler {
   public static void addUser(String firstname, String lastname, String email, String username,
       String password) {
     Connection c = DatabaseHandler.connectToDatabase();
+    PreparedStatement prep = null;
     try {
       c.setAutoCommit(false);
-      Statement stment = c.createStatement();
-      String sql = "insert into tab_acc " + "values ('" + firstname + "', '" + lastname + "', '"
-          + email + "', '" + username + "', '" + password + "');";
-      stment.executeUpdate(sql);
-      stment.close();
+      String sql = "insert into tab_acc values (?, ?, ?, ?, ?);";
+      prep = c.prepareStatement(sql);
+      prep.setString(1, firstname);
+      prep.setString(2, lastname);
+      prep.setString(3, email);
+      prep.setString(4, username);
+      prep.setString(5, password);
+      prep.executeUpdate();
       c.commit();
+      prep.close();
       c.close();
     } catch (Exception e) {
 
@@ -129,23 +140,36 @@ public class DatabaseHandler {
 
   public static void comment(int rating, String comment, String file) {
     String username = AccountsLogin.LOGGED_IN;
-    String DELQuery =
-        "DELETE from tab_rating where username = '" + username + "' AND file = '" + file + "';";
-    String commentQuery =
-        "INSERT INTO tab_comment VALUES('" + file + "', '" + username + "', '" + comment + "');";
-    String ratingQuery = "INSERT INTO tab_rating VALUES('" + file + "', '" + username + "', "
-        + Integer.toString(rating) + ");";
+    String DELQuery = "DELETE from tab_rating where username = ? AND file = ?;";
+    String commentQuery = "INSERT INTO tab_comment VALUES(?, ?, ?);";
+    String ratingQuery = "INSERT INTO tab_rating VALUES(?, ?, ?);";
 
     Connection c = connectToDatabase();
-    Statement stment = null;
+    PreparedStatement prepDEL = null;
+    PreparedStatement prepCOM = null;
+    PreparedStatement prepRATE = null;
+
     if (rating == -1) {
       try {
         c.setAutoCommit(false);
-        stment = c.createStatement();
-        stment.executeUpdate(commentQuery);
-        stment.executeUpdate(ratingQuery);
+        prepCOM = c.prepareStatement(commentQuery);
+        prepRATE = c.prepareStatement(ratingQuery);
+
+        prepCOM.setString(1, file);
+        prepCOM.setString(2, username);
+        prepCOM.setString(3, comment);
+
+        prepRATE.setString(1, file);
+        prepRATE.setString(2, username);
+        prepRATE.setString(3, Integer.toString(rating));
+
+        prepCOM.executeUpdate();
+        prepRATE.executeUpdate();
+
         c.commit();
-        stment.close();
+
+        prepCOM.close();
+        prepRATE.close();
         c.close();
       } catch (Exception e) {
         System.out.println(e.getMessage());
@@ -153,12 +177,30 @@ public class DatabaseHandler {
     } else {
       try {
         c.setAutoCommit(false);
-        stment = c.createStatement();
-        stment.executeUpdate(DELQuery);
-        stment.executeUpdate(commentQuery);
-        stment.executeUpdate(ratingQuery);
+        prepDEL = c.prepareStatement(DELQuery);
+        prepCOM = c.prepareStatement(commentQuery);
+        prepRATE = c.prepareStatement(ratingQuery);
+
+        prepDEL.setString(1, username);
+        prepDEL.setString(2, file);
+
+        prepCOM.setString(1, file);
+        prepCOM.setString(2, username);
+        prepCOM.setString(3, comment);
+
+        prepRATE.setString(1, file);
+        prepRATE.setString(2, username);
+        prepRATE.setString(3, Integer.toString(rating));
+
+        prepDEL.executeUpdate();
+        prepCOM.executeUpdate();
+        prepRATE.executeUpdate();
+
         c.commit();
-        stment.close();
+
+        prepDEL.close();
+        prepCOM.close();
+        prepRATE.close();
         c.close();
       } catch (Exception e) {
         System.out.println(e.getMessage());
@@ -167,15 +209,17 @@ public class DatabaseHandler {
   }
 
   public static ArrayList<String> getAccountInformation(String user) {
-    String query = "select * from tab_acc where username ='" + user + "';";
+    String query = "select * from tab_acc where username = ?;";
     Connection c = DatabaseHandler.connectToDatabase();
     ResultSet res = null;
-    Statement stment = null;
+    PreparedStatement prep = null;
+
     ArrayList<String> accountInfo = new ArrayList<String>();
     try {
       c.setAutoCommit(false);
-      stment = c.createStatement();
-      res = stment.executeQuery(query);
+      prep = c.prepareStatement(query);
+      prep.setString(1, user);
+      res = prep.executeQuery();
       c.commit();
       if (res == null) {
         return accountInfo;
@@ -189,7 +233,7 @@ public class DatabaseHandler {
       }
 
       res.close();
-      stment.close();
+      prep.close();
       c.close();
     } catch (Exception e) {
       System.out.println(e.getMessage());
@@ -199,15 +243,16 @@ public class DatabaseHandler {
   }
 
   public static ArrayList<String> getComments(String file) {
-    String query = "SELECT * FROM tab_comment WHERE file = '" + file + "';";
+    String query = "SELECT * FROM tab_comment WHERE file = ?;";
     Connection c = DatabaseHandler.connectToDatabase();
     ResultSet res = null;
-    Statement stment = null;
+    PreparedStatement prep = null;
     ArrayList<String> comments = new ArrayList<String>();
     try {
       c.setAutoCommit(false);
-      stment = c.createStatement();
-      res = stment.executeQuery(query);
+      prep = c.prepareStatement(query);
+      prep.setString(1, file);
+      res = prep.executeQuery();
       c.commit();
       if (res == null) {
         return comments;
@@ -217,7 +262,7 @@ public class DatabaseHandler {
       }
 
       res.close();
-      stment.close();
+      prep.close();
       c.close();
     } catch (Exception e) {
       System.out.println(e.getMessage());
@@ -226,16 +271,17 @@ public class DatabaseHandler {
   }
 
   public static String getRating(String file) {
-    String query = "SELECT * FROM tab_rating WHERE file = '" + file + "';";
+    String query = "SELECT * FROM tab_rating WHERE file = ?;";
     Connection c = DatabaseHandler.connectToDatabase();
     ResultSet res = null;
-    Statement stment = null;
+    PreparedStatement prep = null;
     int stars = 0;
     int total = 0;
     try {
       c.setAutoCommit(false);
-      stment = c.createStatement();
-      res = stment.executeQuery(query);
+      prep = c.prepareStatement(query);
+      prep.setString(1, file);
+      res = prep.executeQuery();
       c.commit();
 
       while (res.next()) {
@@ -251,7 +297,7 @@ public class DatabaseHandler {
       stars /= total;
 
       res.close();
-      stment.close();
+      prep.close();
       c.close();
     } catch (Exception e) {
       System.out.println(e.getMessage());
