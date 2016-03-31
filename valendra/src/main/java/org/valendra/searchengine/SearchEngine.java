@@ -63,9 +63,10 @@ public class SearchEngine extends HttpServlet {
 		out.println("<input type=\"submit\" value=\"Search\" />");
 		out.println("</form>");
 		String searchString = request.getParameter("search");
-		if (AccountsLogin.LOGGED_IN.equals("false")) {
-			out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/Valendra/login\" />");
-		} else {
+    if (AccountsLogin.LOGGED_IN.equals("false")) {
+      out.println(
+          "<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/Valendra/login\" />");
+    } else {
 			out.println("<html>");
 			out.println("<head>");
 			out.println("<title>Results</title>");

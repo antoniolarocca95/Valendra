@@ -10,24 +10,24 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.util.PDFTextStripper;
 
 public class ParserPDF {
-	public static String[] parse(String path) {
-		PDFTextStripper pdfStripper = null;
-		PDDocument pdDoc = null;
-		COSDocument cosDoc = null;
-		File file = new File(path);
+  public static String[] parse(String path) {
+    PDFTextStripper pdfStripper = null;
+    PDDocument pdDoc = null;
+    COSDocument cosDoc = null;
+    File file = new File(path);
 
-		try {
-			PDFParser parser = new PDFParser(new FileInputStream(file));
-			parser.parse();
-			cosDoc = parser.getDocument();
-			pdfStripper = new PDFTextStripper();
-			pdDoc = new PDDocument(cosDoc);
-			String parsedText = pdfStripper.getText(pdDoc);
-			cosDoc.close();
-			pdDoc.close();
-			return parsedText.split(pdfStripper.getLineSeparator());
-		} catch (IOException e) {
-			return null;
-		}
-	}
+    try {
+      PDFParser parser = new PDFParser(new FileInputStream(file));
+      parser.parse();
+      cosDoc = parser.getDocument();
+      pdfStripper = new PDFTextStripper();
+      pdDoc = new PDDocument(cosDoc);
+      String parsedText = pdfStripper.getText(pdDoc);
+      cosDoc.close();
+      pdDoc.close();
+      return parsedText.split(pdfStripper.getLineSeparator());
+    } catch (IOException e) {
+      return null;
+    }
+  }
 }

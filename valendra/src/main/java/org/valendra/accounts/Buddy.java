@@ -12,69 +12,83 @@ import org.valendra.valendra.Header;
 
 public class Buddy extends HttpServlet {
 
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		response.setContentType("text/html");
-		java.io.PrintWriter out = response.getWriter();
-		Header.drawHeader(out);
-		out.println("<h1>Find a study buddy</h1>");
-		out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"home.css\">");
-		out.println("<form action=\"buddy\" method=\"post\">");
-		out.println("<input type=\"radio\" name=\"buddy\" value=\"firstname\"> First Name<br>");
-		out.println("<input type=\"radio\" name=\"buddy\" value=\"lastname\"> Last Name<br>");
-		out.println("<input type=\"radio\" name=\"buddy\" value=\"email\"> Email Address<br>");
-		out.println("<input type=\"radio\" name=\"buddy\" value=\"username\"> Username<br>");
-		out.println("<input type=\"text\" name=\"search\" placeholder=\"Search\"><br>");
-		out.println("<input type=\"submit\" value=\"Find Buddy\" />");
-		out.println("<br />");
-		out.println("</form>");
+  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    response.setContentType("text/html");
+    java.io.PrintWriter out = response.getWriter();
+    Header.drawHeader(out);
+    if (AccountsLogin.LOGGED_IN.equals("false")) {
+      out.println(
+          "<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/Valendra/login\" />");
+    } else {
+      out.println("<h1>Find a study buddy</h1>");
+      out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"home.css\">");
+      out.println("<form action=\"buddy\" method=\"post\">");
+      out.println("<input type=\"radio\" name=\"buddy\" value=\"firstname\"> First Name<br>");
+      out.println("<input type=\"radio\" name=\"buddy\" value=\"lastname\"> Last Name<br>");
+      out.println("<input type=\"radio\" name=\"buddy\" value=\"email\"> Email Address<br>");
+      out.println("<input type=\"radio\" name=\"buddy\" value=\"username\"> Username<br>");
+      out.println("<input type=\"text\" name=\"search\" placeholder=\"Search\"><br>");
+      out.println("<input type=\"submit\" value=\"Find Buddy\" />");
+      out.println("<br />");
+      out.println("</form>");
+    }
+  }
 
-	}
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    response.setContentType("text/html");
+    java.io.PrintWriter out = response.getWriter();
+    if (AccountsLogin.LOGGED_IN.equals("false")) {
+      out.println(
+          "<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/Valendra/login\" />");
+    } else {
+      String buddyRadio = request.getParameter("buddy");
+      String input = request.getParameter("search");
+      Header.drawHeader(out);
+      out.println("<h1>Study buddies</h1>");
+      out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"home.css\">");
+      String parameter = "";
 
-	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		response.setContentType("text/html");
-		java.io.PrintWriter out = response.getWriter();
-		String buddyRadio = request.getParameter("buddy");
-		String input = request.getParameter("search");
-		Header.drawHeader(out);
-		out.println("<h1>Study buddies</h1>");
-		out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"home.css\">");
-		String parameter = "";
+      if (buddyRadio.equalsIgnoreCase("firstname")) {
+        parameter = "firstname";
+      }
 
-		if (buddyRadio.equalsIgnoreCase("firstname")) {
-			parameter = "firstname";
-		}
+      else if (buddyRadio.equalsIgnoreCase("lastname")) {
+        parameter = "lastname";
+      }
 
-		else if (buddyRadio.equalsIgnoreCase("lastname")) {
-			parameter = "lastname";
-		}
+      else if (buddyRadio.equalsIgnoreCase("email")) {
+        parameter = "email";
+      }
 
-		else if (buddyRadio.equalsIgnoreCase("email")) {
-			parameter = "email";
-		}
+      else if (buddyRadio.equalsIgnoreCase("username")) {
+        parameter = "username";
+      }
 
-		else if (buddyRadio.equalsIgnoreCase("username")) {
-			parameter = "username";
-		}
+      if (parameter.equalsIgnoreCase("")) {
+        out.println("<script>alert(\"Select an option!\");</script>");
+        out.println(
+            "<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/Valendra/buddy\" />");
+      }
 
-		if (parameter.equalsIgnoreCase("")) {
-			out.println("<script>alert(\"Select an option!\");</script>");
-			out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/Valendra/buddy\" />");
-		}
+      if (input.equalsIgnoreCase("")) {
+        out.println("<script>alert(\"Missing input!\");</script>");
+        out.println(
+            "<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/Valendra/buddy\" />");
+      }
 
-		if (input.equalsIgnoreCase("")) {
-			out.println("<script>alert(\"Missing input!\");</script>");
-			out.println("<meta http-equiv=\"refresh\" content=\"0; url=http://localhost:8080/Valendra/buddy\" />");
-		}
-
-		else if (!input.equalsIgnoreCase("")) {
-			ArrayList<String> buddies = DatabaseHandler.findBuddy(parameter, input);
-			for (String buddy : buddies) {
-				out.println(buddy + " <br>");
-			}
-
-		}
-
-	}
+      else if (!input.equalsIgnoreCase("")) {
+        ArrayList<String> buddies = DatabaseHandler.findBuddy(parameter, input);
+        String text = "";
+        for (int i = 0; i < buddies.size(); i += 1) {
+          text += buddies.get(i) + " ";
+          if (((i + 1) % 4) == 0) {
+            out.println("<a href=\"buddyuser?user=" + buddies.get(i) + "\"/>" + text + "</a><br>");
+            text = "";
+          }
+        }
+      }
+    }
+  }
 }
