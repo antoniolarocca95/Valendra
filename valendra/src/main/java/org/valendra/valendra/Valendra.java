@@ -31,7 +31,7 @@ public class Valendra extends HttpServlet {
 
       Header.drawHeader(out);
 
-      out.println("<h1>UTM Search Engine</h1>");
+      out.println("<h1>Valendra</h1>");
       out.println(
           "<div style=\"width:400px; position:relative; top:200px; margin-right:auto; margin-left:auto; border:1px hidden #000;\">");
       out.println("<form action=\"search\" method=\"post\">");
