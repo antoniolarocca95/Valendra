@@ -22,26 +22,25 @@ h3 {
 
 form {
   background: white;
-  width: 1000px;
+  width: 80%;
   box-shadow: 20px 20px 20px rgba(0, 0, 0, 0.7);
   font-family: lato;
   position: relative;
   color: #333;
   border-radius: 10px;
-	left: -300px;
+	position: relative;
+	top: -100px;
 }
 
 form input {
   display: block;
-  width: 95%;
+  width: 78%;
   margin-left: 20px;
   padding: 5px 20px;
   font-size: 1em;
   border-radius: 3px;
   outline: none;
   border: 1px solid #ccc;
-	position: relative;
-	top: -7px;
 }
 
 form button {
@@ -186,7 +185,9 @@ li button:hover:not(.active){
 	left: +10px;
 }
 
-.results {
+.paragraph {
 	position: relative;
-	top: 50px;
+	top: +10px;
+	left: +20px;
+	font-weight: bold;
 }

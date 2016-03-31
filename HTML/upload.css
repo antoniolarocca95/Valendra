@@ -29,6 +29,7 @@ form {
   color: #333;
   border-radius: 10px;
 	left: -300px;
+	height: 150px;
 }
 
 form input {
@@ -41,7 +42,7 @@ form input {
   outline: none;
   border: 1px solid #ccc;
 	position: relative;
-	top: -7px;
+	top: 30px;
 }
 
 form button {
@@ -184,9 +185,4 @@ li button:hover:not(.active){
 	position: relative;
 	top: +10px;
 	left: +10px;
-}
-
-.results {
-	position: relative;
-	top: 50px;
 }

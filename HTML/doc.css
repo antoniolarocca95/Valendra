@@ -1,3 +1,9 @@
+body{
+	background: #085078; /* fallback for old browsers */
+	background: -webkit-linear-gradient(to left, #085078 , #85D8CE); /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to left, #085078 , #85D8CE); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
 .o {
 	position: absolute;
 	top: 50%;
@@ -145,9 +151,11 @@ body::before {
 
 #text{
 	position: absolute;
-	top: 0;
-	left: 0;
+	top: 0px;
+	left: 10px;
 	text-align: left;
+	font-size: 24px;
+	font-family: times, serif;
 }
 
 #commentbox{
@@ -166,9 +174,18 @@ body::before {
 	position: relative;
 	left: 50%;
 	margin-left: 25px;
+	font: bold 11px Arial;
+	text-decoration: none;
+	background-color: #EEEEEE;
+	color: #333333;
 }
 
 .class {
 	color: white;
+}
+
+#Comments {
+	font: bold 11px Arial;
+	color: #333333;
 }
 
