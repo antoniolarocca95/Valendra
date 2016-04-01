@@ -1,0 +1,23 @@
+To run any of our code, a tomcat server must be set up.
+tomcat should be running from /opt/tomcat
+Inside webapps our website 'Valendra' needs a folder.
+All of the files inside of HTML go in this folder.
+There must be a folder called filesDirectory that has proper permissions for the server to write to it.
+Inside WEB-INF a lib folder must contain all the java dependancies listed in the pom.xml
+Inside WEB-INF a classes folder must contain all our classes in the same structure as they are when compiled from maven.
+
+-----FEATURES------
+The Valendra Search Engine features:
+
+Quick searches with most relevant results at the top
+A login/registration system
+The capability to download or upload documents
+The ability to view a document online
+The ability to view documents another user has uploaded
+The ability to find another user based on part of their username, firstname, lastname or email
+A rating and commenting system for documents
+
+Hashed passwords for increased security
+Prepared sql statements to avoid injection
+Rejection of not logged in users
+
