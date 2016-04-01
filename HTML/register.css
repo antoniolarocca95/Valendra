@@ -23,6 +23,7 @@ form {
   position: relative;
   color: #333;
   border-radius: 10px;
+	left: +50px;
 }
 
 form input {

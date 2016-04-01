@@ -22,14 +22,14 @@ h3 {
 
 form {
   background: white;
-  width: 80%;
+  width: 70%;
   box-shadow: 20px 20px 20px rgba(0, 0, 0, 0.7);
   font-family: lato;
   position: relative;
   color: #333;
   border-radius: 10px;
 	position: relative;
-	top: -100px;
+	top: +10px;
 }
 
 form input {
@@ -190,4 +190,9 @@ li button:hover:not(.active){
 	top: +10px;
 	left: +20px;
 	font-weight: bold;
+}
+
+div {
+	position: relative;
+	top: 50px;
 }

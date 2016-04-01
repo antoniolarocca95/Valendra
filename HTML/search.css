@@ -190,3 +190,8 @@ li button:hover:not(.active){
 	position: relative;
 	top: 50px;
 }
+
+#t {
+    font-weight: bold;
+    font-style: italic;
+}

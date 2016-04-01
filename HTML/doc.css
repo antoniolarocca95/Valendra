@@ -151,7 +151,7 @@ body::before {
 
 #text{
 	position: absolute;
-	top: 0px;
+	top: 100px;
 	left: 10px;
 	text-align: left;
 	font-size: 24px;
